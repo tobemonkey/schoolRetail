@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="校园零售, 购物, S2B2C, DSHOP">
+
+    <!-- 引入图标 -->
+    <link rel="icon" href="../../../static/favicon.ico"  type="image/x-icon">
+    <!-- 引入初始化样式 -->
+    <link rel="stylesheet" href="../../../static/css/common/base.css">
+    <!-- 引入公共样式 -->
+    <link rel="stylesheet" href="../../../static/css/common/common.css">
+    <link rel="stylesheet" href="../../../static/css/common/user/shopcar.css">
+    <title>购物车</title>
+</head>
+<body>
+    <!-- 快捷导航模块 -->
+    <section class="shortcut">
+        <div class="w">
+            <div class="fl">
+                <ul>
+                    <li>DShop 欢迎您！&nbsp;</li>
+                    <li>
+                        <a class="style-red" href="https://39b456804w.oicp.vip/loginAndRegister">登入 & 注册</a>
+                    </li>
+                </ul>
+                
+            </div>
+            <div class="fr">
+                
+                <ul>
+                    <li class="shopcar">购物车<span class="count">99+</span></li>
+                    <li></li>
+                    <li>我的订单</li>
+                    <li></li>
+                    <li>我的信息</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="body">
+        <div class="content">
+            <div class="header">
+                <div class="search fl">
+                    <input type="text">
+                    <button type="button">搜 索</button>
+                </div>
+                <div class="total fr">
+                    <h3>共计：</h3><p class="value">0</p>
+                    <button type="button" id="settle">结算</button>
+                </div>
+            </div>
+
+            <div class="cart-table">
+                <div class="cart-table-th">
+
+                    <div class="select-all">
+                        <label><input type="checkbox" name="selectselect-all" id="select-all"><p>全选</p></label>
+                    </div>
+                    <div class="th-info">商品信息</div>
+                    <div class="th-price">单价</div>
+                    <div class="th-count">数量</div>
+                    <div class="th-total">金额</div>
+                    <div class="th-operation">操作</div>
+                </div>
+
+                <div class="cart-table-td">
+                    <ul>
+                        <li>
+                            <div class="td-select">
+                                <input type="checkbox" name="select" class="select">
+                                    <img src="../../../static/images/test/3.jpg" alt="">
+                            </input>
+                            </div>
+                            <div class="td-info">这东西有点东西</div>
+                            <div class="td-price">80</div>
+                            <div class="td-count">
+                                <button class="decrease" type="button">-</button>
+                                <input type="text" class="num" value="1">
+                                <button class="increase" type="button">+</button>
+                            </div>
+                            <div class="td-total">160</div>
+                            <div class="td-operation">
+                                <a href="#">真不干啥</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="td-select">
+                                <input type="checkbox" name="select" class="select">
+                                <img src="../../../static/images/test/3.jpg" alt="">
+                                </input>
+                            </div>
+                            <div class="td-info">这东西有点东西</div>
+                            <div class="td-price">80</div>
+                            <div class="td-count">
+                                <button class="decrease" type="button">-</button>
+                                <input type="text" class="num" value="1">
+                                <button class="increase" type="button">+</button>
+                            </div>
+                            <div class="td-total">160</div>
+                            <div class="td-operation">
+                                <a href="#">真不干啥</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="td-select">
+                                <input type="checkbox" name="select" class="select">
+                                <img src="../../../static/images/test/3.jpg" alt="">
+                                </input>
+                            </div>
+                            <div class="td-info">这东西有点东西</div>
+                            <div class="td-price">80</div>
+                            <div class="td-count">
+                                <button class="decrease" type="button">-</button>
+                                <input type="text" class="num" value="1">
+                                <button class="increase" type="button">+</button>
+                            </div>
+                            <div class="td-total">160</div>
+                            <div class="td-operation">
+                                <a href="#">真不干啥</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="td-select">
+                                <input type="checkbox" name="select" class="select">
+                                <img src="../../../static/images/test/3.jpg" alt="">
+                                </input>
+                            </div>
+                            <div class="td-info">这东西有点东西</div>
+                            <div class="td-price">80</div>
+                            <div class="td-count">
+                                <button class="decrease" type="button">-</button>
+                                <input type="text" class="num" value="1">
+                                <button class="increase" type="button">+</button>
+                            </div>
+                            <div class="td-total">160</div>
+                            <div class="td-operation">
+                                <a href="#">真不干啥</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="td-select">
+                                <input type="checkbox" name="select" class="select">
+                                <img src="../../../static/images/test/3.jpg" alt="">
+                                </input>
+                            </div>
+                            <div class="td-info">这东西有点东西</div>
+                            <div class="td-price">80</div>
+                            <div class="td-count">
+                                <button class="decrease" type="button">-</button>
+                                <input type="text" class="num" value="1">
+                                <button class="increase" type="button">+</button>
+                            </div>
+                            <div class="td-total">160</div>
+                            <div class="td-operation">
+                                <a href="#">真不干啥</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="td-select">
+                                <input type="checkbox" name="select" class="select">
+                                <img src="../../../static/images/test/3.jpg" alt="">
+                                </input>
+                            </div>
+                            <div class="td-info">这东西有点东西</div>
+                            <div class="td-price">80</div>
+                            <div class="td-count">
+                                <button class="decrease" type="button">-</button>
+                                <input type="text" class="num" value="1">
+                                <button class="increase" type="button">+</button>
+                            </div>
+                            <div class="td-total">160</div>
+                            <div class="td-operation">
+                                <a href="#">真不干啥</a>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer 模块 -->
+    <footer class="footer">
+        <div class="w">
+            <div class="mod_help">
+                <dl>
+
+                    <dt>配送方式</dt>
+                    <dd><a href="javascript:void(0);">上门自提</a></dd>
+                    <dd><a href="javascript:void(0);">联系卖家</a></dd>
+                </dl>
+                <dl>
+                    <dt>售后服务</dt>
+                    <dd><a href="javascript:void(0);">退货</a></dd>
+                    <dd><a href="javascript:void(0);">取消订单</a></dd>
+                    <dd><a href="javascript:void(0);">联系卖家</a></dd>
+                </dl>
+
+                <dl>
+                    <dt>帮助中心</dt>
+                    <dd><a href="javascript:void(0);">联系客服</a></dd>
+                </dl>
+                
+            </div>
+
+            <div class="mod_copyright">
+                © 2023 DShop校园零售
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

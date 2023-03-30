@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>登入注册</title>
+	<!-- 引入css 和图标图的css  引入才可以生效 -->
+	<link rel="icon" th:href="@{/static/favicon.ico}" type="image/x-icon" />
+	<link rel="stylesheet" th:href="@{/static/css/common/user/loginAndRegister.css}">
+</head>
+
+<body>
+<div class="container" id="container">
+	<div class="form-container sign-up-container">
+		<!-- 注册 -->
+		<form>
+			<h1>用户注册</h1>
+			<input type="email" id="email" placeholder="邮箱">
+			<input type="password" id="password" placeholder="密码">
+			<div id="verify">
+				<input type="text" id="verify_code"  placeholder="验证码">
+				<button type="button" id="send_code">发送验证码</button>
+			</div>
+
+			<button id="register" type="button" >注册</button>
+		</form>
+	</div>
+	<div class="form-container sing-in-container">
+		<!-- 登入 -->
+		<form>
+			<h1>用户登入</h1>
+			<div class="social-container">
+				<a href="https://github.com/login/oauth/authorize?client_id=971dca317a3eede01103&redirect_uri=https%3A%2F%2F39b456804w.oicp.vip%2Flogin%2Foauth2%2Fgithub%2Fcallback&scope=user" >
+					<img th:src="@{/static/images/iconfont/github.png}"/>
+				</a>
+			</div>
+			<input type="text" id="login-email" placeholder="邮箱">
+			<input type="password" id="login-password" placeholder="密码">
+			<!-- 附加功能 -->
+			<div id="addition">
+				<label><input type="checkbox" name="remember" id="remember"/>记住密码</label>
+				<!-- 打开弹窗按钮 -->
+				<label id="retrieve-label"><a th:href="@{/common/userInfo/forget}" id="forget">忘记密码?</a></label>
+			</div>
+
+			<button type="button" id="login">登入</button>
+		</form>
+	</div>
+
+	<!-- 侧边栏内容 -->
+	<div class="overlay-container">
+
+		<div class="overlay">
+			<!-- 左侧边栏 -->
+			<div class="overlay-pannel overlay-left">
+				<h1>已有账号?</h1>
+				<p>亲爱的快快点我去进行登入吧。</p>
+				<button class="ghost" id="signIn">登入</button>
+			</div>
+			<!-- 右侧边栏 -->
+			<div class="overlay-pannel overlay-right">
+				<h1>没有帐号？</h1>
+				<p>点击注册去注册一个属于你的账号吧。</p>
+				<button class="ghost" id="signUp">注册</button>
+			</div>
+		</div>
+	</div>
+
+</div>
+</body>
+<script th:src="@{/static/js/jquery-3.6.4.js}"></script>
+<script th:src="@{/static/js/axios.js}"></script>
+<script th:src="@{/static/js/loginAndRegister.js}"></script>
+<script th:src="@{/static/js/tip.js}"></script>
+
+</html>

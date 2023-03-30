@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hour.schoolretail.mapper.CategoryMapper">
+
+    <resultMap id="BaseResultMap" type="edu.hour.schoolretail.entity.Category">
+            <id property="id" column="category_id" jdbcType="CHAR"/>
+            <result property="name" column="category_name" jdbcType="VARCHAR"/>
+            <result property="showOrder" column="category_show_order" jdbcType="INTEGER"/>
+            <result property="image" column="category_image" jdbcType="VARCHAR"/>
+            <result property="anchorId" column="category_anchor_id" jdbcType="VARCHAR"/>
+            <result property="createTime" column="category_create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="category_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="CategoryMap" type="edu.hour.schoolretail.vo.shop.CategoryMapVO">
+        <id property="id" column="category_id" jdbcType="CHAR"/>
+        <result property="name" column="category_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        category_id,category_name,category_show_order,
+        category_image,category_anchor_id,category_create_time,
+        category_update_time
+    </sql>
+
+
+    <select id="selectAllId" resultMap="CategoryMap">
+        SELECT t.category_id, t.category_name, t.category_anchor_id
+        FROM t_category t
+    </select>
+</mapper>

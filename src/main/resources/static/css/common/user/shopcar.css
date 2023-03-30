@@ -1,0 +1,210 @@
+.body {
+    padding: 50px 0;
+    background-color: #e8e2e0;
+}
+
+/* 内容显示区 */
+.body .content {
+    width: 900px;
+    margin: 0 auto;
+    padding: 20px 20px;
+    border-radius: 30px;
+    background-color: #fff;
+}
+
+/* 搜索模块以及总价钱计算 */
+.body .content .header {
+    position: relative;
+    font-size: 12px;
+    height: 73px;
+    line-height: 38px;
+    padding: 0 19px;
+    border-bottom: 1px solid rgb(230, 230, 230);
+}
+
+.body .content .header .search {
+
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    width: 345px;
+    height: 38px;
+    background-color: #ebebeb;
+    
+}
+
+.body .content .header .search input {
+    float: left;
+    width: 280px;
+    line-height: 38px;
+    margin: 0 10px;
+    background-color: #ebebeb;
+}
+
+.body .content .header .search button  {
+    float: left;
+    width: 45px;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    color: #fff;
+    background-color: #ff5800;
+}
+
+.body .content .header .total {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    display: flex;
+    min-width: 200px;
+    height: 38px;
+    font-size: 18px;
+}
+
+.body .content .header .total p::before{
+    content: '￥';
+    color: #ff5800;
+}
+
+.body .content .header .total p {
+    color: #ff5800;
+}
+
+.body .content .header .total #settle {
+    width: 74px;
+    height: 30px;
+    margin-left: 10px;
+    border-radius: 15px;
+    cursor: auto;
+}
+
+/* 商品信息表 */
+.body .cart-table {
+    padding: 0 19px;
+}
+
+/* 商品信息表表头 */
+.body .cart-table .cart-table-th {
+    position: relative;
+    height: 50px;
+    line-height: 50px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.body .cart-table .cart-table-th *{
+    float: left;
+}
+
+.body .cart-table-th .select-all {
+    width: 150px;
+}
+
+.body .cart-table-th .select-all input {
+    margin-top: 19px;
+}
+
+.body .cart-table-th .select-all * {
+    margin-right: 4px;
+    cursor: pointer;
+}
+
+.body .cart-table-th .th-info {
+    width: 300px;
+}
+
+.body .cart-table-th .th-price {
+    width: 100px;
+}
+
+.body .cart-table-th .th-count {
+    width: 100px;
+}
+
+.body .cart-table-th .th-total {
+    width: 100px;
+}
+
+.body .cart-table-th .th-operation {
+    width: 100px;
+}
+
+/* 商品信息内容 */
+.cart-table-td li{
+    height: 88px;
+    border: 1px solid #f5f5f5;
+    padding: 20px 10px;
+    margin-top: 20px;
+    border-radius: 16px;
+    background-color: #f5f5f5;
+    transition: all 0.5s;
+}
+
+.cart-table-td li .td-select .select,img {
+    cursor: pointer;
+}
+
+.cart-table-td li:hover {
+    border: 1px solid #ff5800;
+}
+
+.cart-table-td li * {
+    float: left;
+}
+
+.cart-table-td li .td-select {
+    width: 140px;
+}
+
+.cart-table-td li .td-select input {
+    margin-right: 6px;
+}
+
+.cart-table-td li img{
+    width: 80px;
+    height: 80px;
+}
+
+.cart-table-td li .td-info {
+    width: 300px;
+}
+
+.cart-table-td li .td-price,.td-total {
+    width: 100px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #ff5800;
+}
+
+.cart-table-td li .td-price::before, .td-total::before {
+    content: '￥';
+}
+
+.cart-table-td li .td-count {
+    width: 100px;
+}
+
+.cart-table-td li .td-count button {
+    width: 19px;
+    height: 25px;
+    border: 1px solid #e5e5e5;
+    background-color: #f0f0f0;
+}
+
+.cart-table-td li .td-count input {
+    width: 41px;
+    height: 23px;
+    line-height: 23px;
+    text-align: center;
+    border: 1px solid #aaa;
+    background-color: #fff;
+}
+
+
+.cart-table-td li .td-operation {
+    width: 100px;
+}
+
+.cart-table-td li .td-operation a:hover {
+    color: #ff5800;
+}

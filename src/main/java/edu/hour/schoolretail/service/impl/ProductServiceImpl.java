@@ -1,0 +1,132 @@
+package edu.hour.schoolretail.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import edu.hour.schoolretail.common.constant.enums.exception.MerchantExceptionEnum;
+import edu.hour.schoolretail.dto.shop.ProductDTO;
+import edu.hour.schoolretail.entity.Product;
+import edu.hour.schoolretail.exception.UserOperationException;
+import edu.hour.schoolretail.service.ProductService;
+import edu.hour.schoolretail.mapper.ProductMapper;
+import edu.hour.schoolretail.util.ImageUtil;
+import edu.hour.schoolretail.util.JWTUtil;
+import edu.hour.schoolretail.vo.shop.ProductDetailVO;
+import edu.hour.schoolretail.vo.shop.ProductVO;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+* @author demoy
+* @description 针对表【t_product(商品信息)】的数据库操作Service实现
+* @createDate 2023-03-22 21:02:55
+*/
+@Slf4j
+@Service
+public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product>
+    implements ProductService{
+
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+	@Resource
+	private ProductMapper productMapper;
+
+
+
+	@Override
+	public Map<String, Object> insertNewProduct(ProductDTO productDTO) {
+
+		Map<String, Object> res = new HashMap<>();
+
+		// 解析 token 中的 id
+		Long id = null;
+		try {
+			id = JWTUtil.getUserIdByToken(productDTO.getToken());
+		} catch (Exception e) {
+			log.error("token 解析异常，异常信息为：{}", e.getMessage());
+			putException(res, MerchantExceptionEnum.USER_TOKEN_ERROR);
+		}
+		// 补充商品数据
+		Product product = productDTO.toProduct();
+		product.setOwnerId(id);
+		LocalDateTime now = LocalDateTime.now();
+		product.setCreateTime(now);
+		product.setUpdateTime(now);
+		// 商品图片处理
+		MultipartFile img = productDTO.getImg();
+		String imgPath = imageProcess(img, product.getCategoryId());
+		product.setImage(imgPath);
+
+		// 数据插入
+		try {
+			productMapper.insert(product);
+		} catch (Exception e) {
+			log.error("商品信息插入失败，错误信息：{}", e.getMessage());
+			putException(res, MerchantExceptionEnum.GOODS_INSERT_FAIL);
+			return res;
+		}
+		putException(res, MerchantExceptionEnum.COMMON_SUCCESS);
+		return res;
+	}
+
+	@Cacheable(value = "category")
+	@Override
+	public Map<String, List<ProductVO>> selectAllCategoryGoods() {
+		return productMapper.selectAllCategoryGoods();
+	}
+
+	@Override
+	public Map<String, Object> selectGoodsInfo(Integer id) {
+		Map<String, Object> map = new HashMap<>();
+		ProductDetailVO productDetailVO = productMapper.selectGoodsInfo(id);
+		if (productDetailVO == null) {
+			putException(map, MerchantExceptionEnum.GOODS_NOT_EXISTS);
+		} else if (productDetailVO.getStatus() == 0) {
+			putException(map, MerchantExceptionEnum.GOODS_HAVEN_FREEZE);
+		} else {
+			putException(map, MerchantExceptionEnum.COMMON_SUCCESS);
+			map.put("data", productDetailVO);
+		}
+
+		return map;
+	}
+
+	/**
+	 * 将图片进行处理并且存储在本地，并且把路径放在数据库中
+	 * @param img
+	 * @param id 商品种类id，用于拼接路径
+	 * @return
+	 */
+	private String imageProcess(MultipartFile img, String id) {
+		String imgName = img.getOriginalFilename();
+		String extension = imgName.substring(imgName.lastIndexOf("."));
+		String imgPath = ImageUtil.getPictureAbsolutePath(extension, "goods", sdf.format(new Date()), id);
+		try {
+			img.transferTo(new File(imgPath));
+		} catch (IOException e) {
+			log.error("商品图片存储异常！异常信息为：{}", e.getMessage());
+			throw new UserOperationException(e.getMessage());
+		}
+		return imgPath.substring(imgPath.indexOf("images") + 7);
+	}
+
+	private void putException(Map<String, Object> map, MerchantExceptionEnum exception) {
+		map.put("status", exception.getStatus());
+		map.put("msg", exception.getMsg());
+		map.put("url", exception.getUrl());
+	}
+}
+
+
+
+

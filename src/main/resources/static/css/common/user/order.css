@@ -1,0 +1,202 @@
+.body {
+    width: 900px;
+    margin: 30px auto;
+}
+
+/* 设置 tab 栏 */
+.tab ul {
+    height: 50px;
+    margin: 0 auto;
+    border-bottom: 2px solid #e8e8e8;
+}
+
+.tab ul li:nth-child(odd) {
+    float: left;
+    padding: 0 20px;
+    font-size: 16px;
+    font-weight: 700;
+    height: 50px;
+    line-height: 50px;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tab ul li:hover {
+    color: #ff6000;
+}
+
+.tab ul li:nth-child(even) {
+    float: left;
+    width: 1px;
+    height: 12px;
+    border-left: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+/* 表头格式 */
+.content-th {
+    height: 40px;
+    line-height: 40px;
+    font-size: 12px;
+    text-align: center;
+    margin: 15px auto 0;
+    background-color: #f5f5f5;
+}
+
+.content-th .goods-th {
+    float: left;
+    width: 400px;
+}
+
+.content-th .price-th {
+    float: left;
+    width: 120px;
+}
+
+.content-th .count-th {
+    float: left;
+    width: 80px;
+}
+
+.content-th .total-th {
+    float: left;
+    width: 140px;
+}
+
+.content-th .operation-th {
+    float: left;
+    width: 160px;
+}
+
+/* 功能选项 */
+.func {
+    height: 30px;
+    line-height: 30px;
+    margin: 15px 20px;
+}
+
+.func .select-all {
+    float: left;
+    font-size: 12px;
+}
+
+.func .select-all label:hover {
+    cursor: pointer;
+}
+
+.func .page {
+    float: right;
+}
+
+.func .page button {
+    width: 70px;
+    height: 30px;
+    margin-left: 15px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    background-color: #ffffff;
+}
+
+.func .page button:hover {
+    border: 1px solid #ff6000;
+    border-radius: 3px;
+}
+
+.info ul li {
+    margin: 15px 0;
+    border: 1px solid #daf3ff;
+}
+
+/* 订单信息的头部 */
+.info .mod-header {
+    height: 35px;
+    line-height: 35px;
+    padding: 0 20px;
+    background-color: #eaf8ff;
+}
+
+.info .mod-header .create-time {
+    font-weight: 700;
+    font-size: 14px;
+    padding: 0 10px;
+    color: #000;
+}
+
+.info .mod-header .order {
+    font-size: 10px;
+}
+
+
+
+/* 订单的主体信息 */
+.info .content-td {
+    position: relative;
+    width: 360px;
+    height: 80px;
+    padding: 20px 20px;
+}
+
+
+.content-td .goods-td img {
+    width: 80px;
+    height: 80px;
+}
+
+.content-td .goods-td p {
+    position: absolute;
+    display: inline-block;
+    left: 110px;
+    width: 250px;
+    height: 14px;
+    line-height: 14px;
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.content-td .goods-td .deliver{
+    bottom: 20px;
+}
+
+
+.content-td .price-td {
+    position: absolute;
+    top: 20px;
+    left: 400px;
+    width: 120px;
+    text-align: center;
+}
+
+.content-td .count-td {
+    position: absolute;
+    top: 20px;
+    left: 520px;
+    width: 90px;
+    text-align: center;
+}
+
+.content-td .total-td {
+    position: absolute;
+    top: 20px;
+    left: 600px;
+    width: 140px;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.content-td .operation-td {
+    position: absolute;
+    top: 20px;
+    left: 740px;
+    width: 160px;
+    text-align: center;
+}
+
+.content-td .total-td::before {
+    content: '￥';
+}
+
+.content-td .price-td::before {
+    content: '￥';
+}

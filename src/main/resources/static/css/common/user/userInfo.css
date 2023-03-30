@@ -1,0 +1,163 @@
+.user-info {
+    width: 900px;
+    height: 600px;
+    margin: 40px auto;
+    border-radius: 40px;
+}
+
+/* 用户信息左侧布局 */
+.user-info .left {
+    position: relative;
+    float: left;
+    width: 200px;
+    height: 500px;
+    margin: 30px 20px 0 30px;
+}
+
+/* 用户信息题目 */
+.user-info .left h3 {
+    font-size: 32px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* 用户信息头像 */
+.user-info .left #head-img {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    margin: 0 25px;
+    margin-top: 90px;
+}
+
+.user-info .left #head-img img {
+    width: 150px;
+    height: 150px;
+}
+
+/* 更新用户信息按钮 */
+.user-info .left #update-info {
+    position: absolute;
+    bottom: 80px;
+    width: 150px;
+    height: 40px;
+    border-radius: 20px;
+    margin: 0 25px;
+    background-color: #1f65fc;
+}
+
+.user-info .left #update-password {
+    position: absolute;
+    bottom: 10px;
+    width: 150px;
+    height: 40px;
+    border-radius: 20px;
+    margin: 0 25px;
+    background-color: #1f65fc;
+}
+
+
+/* 用户信息右侧布局 */
+.user-info .right {
+    float: left;
+    width: 610px;
+    height: 600px;
+    padding: 30px 20px;
+}
+
+.user-info .right>div  {
+    font-size: 16px;
+    padding: 10px 20px;
+    color: #111;
+}
+
+
+.user-info .right label span {
+    float: left;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+}
+
+/* 用户名 */
+.user-info .right .username input {
+    width: 300px;
+    height: 40px;
+    padding-left: 10px;
+}
+
+/* 用户签名 */
+.user-info .right .sign .content {
+    position: relative;
+}
+
+.user-info .right  textarea {
+    
+    width: 298px;
+    height: 90px;
+    line-height: 30px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.user-info .right .sign textarea:hover {
+    border: 1px solid #ff5800;
+}
+
+.user-info .right .sign .content p {
+    position: absolute;
+    right: 160px;
+    bottom: 10px;
+    font-size: 10px;
+    color: #5c5a5a;
+}
+
+/* 用户地址 */
+.user-info .right .address .content {
+    padding-top: 8px;
+}
+
+.user-info .right .address .content select {
+    width: 100px;
+}
+
+.user-info .right .address .content textarea {
+    display: block;
+    margin: 20px 0 0 100px;
+}
+
+
+.user-info .right .address .show textarea {
+    display: none;
+    resize:none;
+    outline: none; 
+    width: 298px;
+    height: 90px;
+    line-height: 30px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+/* 用户邮箱 */
+.user-info .right .email {
+    padding-top: 30px;
+}
+.user-info .right .email .content {
+    position: relative;
+    padding-top: 8px;
+}
+
+.user-info .right .email .content button {
+    position: absolute;
+    top: 2px;
+    width: 150px;
+    height: 40px;
+    border-radius: 20px;
+    margin: 0 25px;
+    background-color: #1f65fc;
+}

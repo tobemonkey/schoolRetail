@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hour.schoolretail.mapper.WechatUserMapper">
+
+    <resultMap id="BaseResultMap" type="edu.hour.schoolretail.entity.WechatUser">
+            <id property="openId" column="wechat_open_id" jdbcType="VARCHAR"/>
+            <result property="nickname" column="wechat_nickname" jdbcType="VARCHAR"/>
+            <result property="sex" column="wechat_sex" jdbcType="CHAR"/>
+            <result property="province" column="wechat_province" jdbcType="VARCHAR"/>
+            <result property="city" column="wechat_city" jdbcType="VARCHAR"/>
+            <result property="country" column="wechat_country" jdbcType="VARCHAR"/>
+            <result property="headImageUrl" column="wechat_head_image_url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        wechat_open_id,wechat_nickname,wechat_sex,
+        wechat_province,wechat_city,wechat_country,
+        wechat_head_image_url
+    </sql>
+</mapper>

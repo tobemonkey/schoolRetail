@@ -1,0 +1,98 @@
+*{
+    margin: 0;
+    padding: 0;
+    /*标准盒子 */
+    box-sizing: border-box;
+}
+
+body,html{
+    font-family: Arial, Helvetica, sans-serif;
+    /* 锁定背景： */
+    background: #f8f8f8 fixed;
+    /* 弹性布局 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin:  0 auto;
+}
+
+h1{
+    margin: 0.2rem;
+    font-size: 1.8rem;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    padding: 5px 0px;
+}
+
+.container button{
+    background: #417dff;
+    color: white;
+    border: 1px solid #fff;
+    outline: none;
+    /* 鼠标放上变小手 */
+    cursor: pointer;
+    width: 5rem;
+    border-radius: 8px;
+    transition: all 100ms ease-in;
+    margin: 0.6rem 0;
+    padding: 0.5rem 0;
+}
+
+
+.container {
+
+    width: 700px;
+    height: 400px;
+
+    background-color: #fff;
+
+    border: none;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, .5);
+
+    padding: 20px 40px;
+
+}
+
+.container #email, #password {
+    display: block;
+    width: 70%;
+    height: 2.2rem;
+    text-indent: 1rem;
+    /* 把input上左右边框取消 */
+    border: 1px none #343434;
+    border-bottom-style: solid;
+    /* 点击input边框消失 */
+    outline: none;
+    margin: 0.6rem 0 2rem 0;
+    font-size: 1rem;
+}
+
+.container .verify {
+    width: 70%;
+}
+
+.container #verify {
+
+    width: 70%;
+    height: 2.2rem;
+    text-indent: 1rem;
+    /* 把input上左右边框取消 */
+    border: 1px none #343434;
+    border-bottom-style: solid;
+    /* 点击input边框消失 */
+    outline: none;
+    margin: 0.6rem 0 1rem 0;
+    font-size: 1rem;
+}
+
+.container #get_code {
+    width: 100px;
+    margin: 0px 10px;
+}
+

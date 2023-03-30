@@ -1,0 +1,128 @@
+.body {
+    width: 900px;
+    height: 400px;
+    padding: 20px 20px;
+    margin: 30px auto;
+    border: 1px solid #123456;
+}
+
+.left {
+    float: left;
+    width: 400px;
+}
+
+.left img {
+    width: 400px;
+    height: 400px;
+    cursor: pointer;
+}
+
+.right {
+    position: relative;
+    float: left;
+    width: 440px;
+    height: 400px;
+    padding-left: 20px;
+}
+
+.right .title {
+    width: 440px;
+    padding-bottom: 10px;
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.right .th {
+    float: left;
+    width: 100px;
+    font-size: 12px;
+    padding: 0 5px;
+}
+
+.right .price {
+    height: 40px;
+    line-height: 40px;
+}
+
+.right .price .td {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ff5800;
+}
+
+.right .price .td::before {
+    content: '￥';
+}
+
+.right .shoper-address {
+    height: 40px;
+    line-height: 40px;
+}
+
+.right .count {
+    height: 40px;
+    line-height: 40px;
+    padding: 10px 0;
+    vertical-align: middle;
+}
+
+.right .count input {
+    float: left;
+    width: 41px;
+    height: 23px;
+    line-height: 23px;
+    text-align: center;
+    border: 1px solid #aaa;
+    background-color: #fff;
+}
+
+.right .count button {
+    float: left;
+    width: 19px;
+    height: 25px;
+    border: 1px solid #e5e5e5;
+    background-color: #f0f0f0;
+}
+
+
+.right .desc textarea {
+    width: 300px;
+    height: 100px;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: 400;
+    border: none;
+    overflow: hidden;
+}
+
+.right .operation {
+    position: absolute;
+    bottom: 0;
+}
+
+.right .operation #buy {
+    width: 136px;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    color: #e5511d;
+    border: 1px solid #f0cab6;
+    margin-right: 15px;
+    background-color: #ffe4d0;
+}
+
+.right .operation #add-shopcar {
+    width: 200px;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    color: #fff;
+    background-color: #ff4400;
+}
+
+.right .operation #add-shopcar::before {
+    content: '\e93a';
+    font-family: 'icomoon';
+    padding-right: 5px;
+}

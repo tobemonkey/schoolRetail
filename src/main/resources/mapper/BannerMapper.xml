@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hour.schoolretail.mapper.BannerMapper">
+
+    <resultMap id="BaseResultMap" type="edu.hour.schoolretail.entity.Banner">
+            <id property="id" column="banner_id" jdbcType="INTEGER"/>
+            <result property="goodsId" column="banner_goods_id" jdbcType="INTEGER"/>
+            <result property="image" column="banner_image" jdbcType="VARCHAR"/>
+            <result property="order" column="banner_order" jdbcType="INTEGER"/>
+            <result property="type" column="banner_type" jdbcType="CHAR"/>
+            <result property="status" column="banner_status" jdbcType="INTEGER"/>
+            <result property="createTime" column="banner_create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="banner_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="BannerShowMap" type="edu.hour.schoolretail.vo.shop.BannerVO">
+        <result property="goodsId" column="banner_goods_id" jdbcType="INTEGER"/>
+        <result property="image" column="banner_image" jdbcType="VARCHAR"/>
+        <result property="order" column="banner_order" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        banner_id,banner_goods_id,banner_image,
+        banner_order,banner_type,banner_status,
+        banner_create_time,banner_update_time
+    </sql>
+
+    <select id="selectAllBroadcast" resultMap="BannerShowMap">
+        SELECT t.banner_image, t.banner_order, t.banner_goods_id
+        FROM t_banner t
+        WHERE t.banner_type = '001'
+            AND t.banner_status = 1
+        ORDER BY t.banner_order;
+    </select>
+
+    <select id="selectAllRecommend" resultMap="BannerShowMap">
+        SELECT t.banner_image, t.banner_order, t.banner_goods_id
+        FROM t_banner t
+        WHERE t.banner_type = '002'
+          AND t.banner_status = 1
+        ORDER BY t.banner_order;
+    </select>
+</mapper>

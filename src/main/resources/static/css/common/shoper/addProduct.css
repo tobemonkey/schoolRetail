@@ -1,0 +1,93 @@
+.info {
+    border: 1px solid #222222;
+    width: 900px;
+    margin: 30px auto;
+    padding: 20px 30px;
+}
+
+.info .title {
+    width: 100px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #000;
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid #b3afaf;
+}
+
+.info .body {
+    width: 600px;
+    margin: 0 auto;
+    padding: 30px 0;
+}
+
+.info .body div span {
+    display: grid;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    padding: 10px 0;
+}
+
+.info .body .product-category select {
+    width: 150px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin: 0 10px;
+}
+
+
+.info .body .product-name input {
+    width: 400px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px 10px;
+    margin: 0 10px;
+    border: 1px solid #767676;
+}
+
+
+.info .body .product-desc textarea {
+    width: 376px;
+    height: 126px;
+    line-height: 24px;
+    padding: 12px;
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+.info .body .product-img input {
+    margin: 0 10px;
+}
+
+.info .body .product-stock input {
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px 10px;
+    margin: 0 10px;
+    border: 1px solid #767676;
+}
+
+.info .body .product-price input {
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px 10px;
+    margin: 0 10px;
+    border: 1px solid #767676;
+}
+
+.info .body .product-price input::before {
+    content: '￥';
+    color: #ff5800;
+}
+
+.info .body #submit {
+    width: 100px;
+    height: 30px;
+    margin: 20px auto;
+    color: #fff;
+    background-color: #1f65fc;
+    border-radius: 5px;
+}

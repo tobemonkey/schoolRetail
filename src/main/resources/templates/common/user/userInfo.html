@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="校园零售, 购物, S2B2C, DSHOP">
+
+    <!-- 引入图标 -->
+    <link rel="icon" href="../../../static/favicon.ico"  type="image/x-icon">
+    <!-- 引入初始化样式 -->
+    <link rel="stylesheet" href="../../../static/css/common/base.css">
+    <!-- 引入公共样式 -->
+    <link rel="stylesheet" href="../../../static/css/common/common.css">
+    <link rel="stylesheet" href="../../../static/css/common/user/userInfo.css">
+    <title>用户信息</title>
+</head>
+<body>
+    <!-- 快捷导航模块 -->
+    <section class="shortcut">
+        <div class="w">
+            <div class="fl">
+                <ul>
+                    <li>DShop 欢迎您！&nbsp;</li>
+                    <li>
+                        <a class="style-red" href="https://39b456804w.oicp.vip/loginAndRegister">登入 & 注册</a>
+                    </li>
+                </ul>
+                
+            </div>
+            <div class="fr">
+                
+                <ul>
+                    <li class="shopcar">购物车<span class="count">99+</span></li>
+                    <li></li>
+                    <li>我的订单</li>
+                    <li></li>
+                    <li>我的信息</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="user-info">
+        <div class="left">
+            <h3>用户信息</h3>
+            <button id="head-img"><img src="../../../static/images/kf_vx.png" alt=""></button>
+            <button id="update-info">修改信息</button>
+            <button id="update-password">修改密码</button>
+        </div>
+        <div class="right">
+            <div class="username">
+                <label for="username">
+                    <span>用户名</span>
+                    <div class="content">
+                        <input type="text" value="用户名0327">
+                    </div>
+                </label>
+            </div>
+            <div class="sign">
+                <label for="sign">
+                    <span>个性签名</span>
+                    <div class="content">
+                        <textarea name="sign" id="sign" cols="30" rows="10" placeholder="这个用户很懒，什么都没写~"></textarea>
+                        <p>10/20</p>
+                    </div>
+                </label>
+            </div>
+            <div class="address">
+                <label for="address">
+                    <span>地址</span>
+                    <div class="content">
+                        <select name="province" id="province">
+                            <option selected="selected">--请选择--</option>
+                            <option selected="selected">江西省</option>
+                        </select>
+                        <select name="city" id="city"></select>
+                        <select name="county" id="county"></select>
+                        <textarea name="detail-address" id="detail-address" cols="30" rows="10" placeholder="请填写详细地址"></textarea>
+                        
+                    </div>
+                    <div class="show">
+                        <textarea name="detail-address" cols="30" rows="10" placeholder="暂未添加地址，去添加吧" readonly></textarea>
+                    </div>
+                </label>
+            </div>
+
+            <div class="email">
+                <label for="email">
+                    <span>邮箱</span>
+                    <div class="content">
+                        <input type="text" id="email" value="2403160039@qq.com">
+                        <button class="change-bind">绑定其他邮箱</button>
+                    </div>
+                </label>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- footer 模块 -->
+    <footer class="footer">
+        <div class="w">
+            <div class="mod_help">
+                <dl>
+
+                    <dt>配送方式</dt>
+                    <dd><a href="javascript:void(0);">上门自提</a></dd>
+                    <dd><a href="javascript:void(0);">联系卖家</a></dd>
+                </dl>
+                <dl>
+                    <dt>售后服务</dt>
+                    <dd><a href="javascript:void(0);">退货</a></dd>
+                    <dd><a href="javascript:void(0);">取消订单</a></dd>
+                    <dd><a href="javascript:void(0);">联系卖家</a></dd>
+                </dl>
+
+                <dl>
+                    <dt>帮助中心</dt>
+                    <dd><a href="javascript:void(0);">联系客服</a></dd>
+                </dl>
+                
+            </div>
+
+            <div class="mod_copyright">
+                © 2023 DShop校园零售
+            </div>
+        </div>
+    </footer>
+</body>
+<script src="../../static/js/userInfo/userInfo.js"></script>
+</html>

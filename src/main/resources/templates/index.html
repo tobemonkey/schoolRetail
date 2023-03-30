@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="校园零售, 购物, S2B2C, DSHOP">
+
+    <!-- 引入图标 -->
+    <link rel="icon" th:href="@{/static/favicon.ico}"  type="image/x-icon">
+    <!-- 引入初始化样式 -->
+    <link rel="stylesheet" th:href="@{/static/css/common/base.css}">
+    <!-- 引入公共样式 -->
+    <link rel="stylesheet" th:href="@{/static/css/common/common.css}">
+    <link rel="stylesheet" th:href="@{/static/css/index.css}">
+    <title>DShop</title>
+</head>
+<body>
+    <!-- 快捷导航模块 -->
+    <section class="shortcut">
+        <div class="w">
+            <div class="fl">
+                <ul th:if="${userInfo == null}">
+                    <li>DShop 欢迎您！&nbsp;</li>
+                    <li>
+                        <a class="style-red" href="https://39b456804w.oicp.vip/loginAndRegister">登入 & 注册</a>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="fr" th:if="${userInfo != null}">
+
+                <ul>
+                    <li class="shopcar">购物车<span class="count" th:text="${userInfo.count}"></span></li>
+                    <li></li>
+                    <li>我的订单</li>
+                    <li></li>
+                    <li>
+                        <a><img src="../static/images/test/1.png"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- header 模块 -->
+    <header class="header w">
+        <!-- logo 模块 -->
+        <div class="logo">
+            <h1><a href="https://39b456804w.oicp.vip/" title="DShop校园零售">DShop校园零售</a></h1>
+        </div>
+
+        <!-- 搜索框 -->
+        <div class="search">
+            <input type="text">
+            <button type="button">搜 索</button>
+        </div>
+    </header>
+
+    
+
+    <!-- nav 模块 -->
+    <!-- <nav class="nav">
+        <div class="w">
+            <div class="dropdown">
+                <div class="dt">全部商品分类</div>
+                <div class="dd">商品详细分类 </div>
+            </div>
+            <div class="navitems"></div>
+        </div>
+    </nav> -->
+
+    <!-- 轮播图 -->
+    <div class="banner w">
+        <a class="arrow-left"><</a>
+        <a class="arrow-right">></a>
+        <ul>
+            <li th:each="broadcast : ${broadcasts}"><a th:href="@{/shop/goods/info/}+${broadcast.goodsId}"><img th:src="${broadcast.image}" alt="" srcset=""></a></li>
+        </ul>
+        <ol class="circle">
+        </ol>
+    </div>
+
+    <!-- 推荐模块 -->
+    <div class="recommand w">
+        <div class="head">
+            <img src="../static/images/recom.png" alt="">
+        </div>
+        <div class="content">
+            <ul>
+                <li th:each="recommend : ${recommends}"><a th:href="@{/shop/goods/info/}+${recommend.goodsId}"><img th:src="${recommend.image}" alt=""></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 各个分类的目录 -->
+    <div class="catalogue">
+        <h3>你想找的：</h3>
+        <ul>
+           <li th:each="products : ${productMap}"><a th:href="'#'+${products.value.categoryAnchor}" th:text="${products.key}" ></a></li>
+        </ul>
+    </div>
+
+    <!-- 各个分类模块 -->
+    <div class="category w">
+        <ul class="content">
+            <li class="part"  th:each="products : ${productMap}">
+                <img class="ico" th:src="${products.value.categoryImage}" alt="">
+                <span th:id="${products.value.categoryAnchor}" th:text="${products.key}" ></span>
+                <hr>
+                <ul class="goods">
+                    <li  th:each="product : ${products.value.product}" >
+                        <img th:src="${product.image}" alt="">
+                        <div class="introduction">
+                            <h3 th:text="${product.name}"></h3>
+                            <p th:text="${product.price}"></p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        
+    </div>
+
+     <!-- footer 模块 -->
+     <footer class="footer">
+        <div class="w">
+            <div class="mod_help">
+                <dl>
+
+                    <dt>配送方式</dt>
+                    <dd><a href="javascript:void(0);">上门自提</a></dd>
+                    <dd><a href="javascript:void(0);">联系卖家</a></dd>
+                </dl>
+                <dl>
+                    <dt>售后服务</dt>
+                    <dd><a href="javascript:void(0);">退货</a></dd>
+                    <dd><a href="javascript:void(0);">取消订单</a></dd>
+                    <dd><a href="javascript:void(0);">联系卖家</a></dd>
+                </dl>
+
+                <dl>
+                    <dt>帮助中心</dt>
+                    <dd><a href="javascript:void(0);">联系客服</a></dd>
+                </dl>
+
+            </div>
+
+            <div class="mod_copyright">
+                © 2023 DShop校园零售
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+<script th:src="@{/static/js/jquery-3.6.4.js}"></script>
+<script th:src="@{/static/js/animate.js}"></script>
+<script th:src="@{/static/js/heartCheck.js}"></script>
+<script th:src="@{/static/js/index.js}"></script>
+
+</html>

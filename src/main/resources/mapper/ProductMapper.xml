@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.hour.schoolretail.mapper.ProductMapper">
+
+    <resultMap id="BaseResultMap" type="edu.hour.schoolretail.entity.Product">
+            <id property="id" column="product_id" jdbcType="BIGINT"/>
+            <result property="name" column="product_name" jdbcType="VARCHAR"/>
+            <result property="categoryId" column="product_category_id" jdbcType="INTEGER"/>
+            <result property="ownerId" column="product_owner_id" jdbcType="BIGINT"/>
+            <result property="desc" column="product_desc" jdbcType="VARCHAR"/>
+            <result property="image" column="product_image" jdbcType="VARCHAR"/>
+            <result property="stock" column="product_stock" jdbcType="INTEGER"/>
+            <result property="price" column="product_price" jdbcType="DECIMAL"/>
+            <result property="status" column="product_status" jdbcType="INTEGER"/>
+            <result property="createTime" column="product_create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="product_update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="CategoryGoodsMap" type="map">
+        <result property="categoryName" column="category_name" jdbcType="VARCHAR" />
+        <result property="categoryImage" column="category_image" jdbcType="VARCHAR" />
+        <result property="categoryAnchor" column="category_anchor_id" jdbcType="VARCHAR" />
+        <collection property="product" javaType="list" ofType="edu.hour.schoolretail.vo.shop.ProductVO">
+            <id property="id" column="product_id" jdbcType="BIGINT"/>
+            <result property="name" column="product_name" jdbcType="VARCHAR"/>
+            <result property="image" column="product_image" jdbcType="VARCHAR"/>
+            <result property="price" column="product_price" jdbcType="DECIMAL"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="GoodsDetailInfo" type="edu.hour.schoolretail.vo.shop.ProductDetailVO">
+        <result property="name" column="product_name" jdbcType="VARCHAR"/>
+        <result property="desc" column="product_desc" jdbcType="VARCHAR"/>
+        <result property="image" column="product_image" jdbcType="VARCHAR"/>
+        <result property="stock" column="product_stock" jdbcType="INTEGER"/>
+        <result property="price" column="product_price" jdbcType="DECIMAL"/>
+        <result property="status" column="product_status" jdbcType="INTEGER"/>
+        <result property="merchantAddress" column="user_address" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        product_id,product_name,product_category_id,
+        product_owner_id,product_desc,product_image,
+        product_stock,product_price,product_status,
+        product_create_time,product_update_time
+    </sql>
+
+    <select id="selectAllCategoryGoods" resultMap="CategoryGoodsMap">
+        SELECT tc.category_name, tp.product_id, tp.product_name, tp.product_image, tp.product_price, tc.category_image, tc.category_anchor_id
+        FROM t_product tp
+        JOIN t_category tc
+            ON tp.product_category_id = tc.category_id
+        WHERE tp.product_status != 0
+    </select>
+
+    <select id="selectGoodsInfo" resultMap="GoodsDetailInfo">
+        SELECT t.product_name, t.product_image, t.product_desc, t.product_price, t.product_stock, t.product_status, merchant.user_address
+            FROM t_product t
+            JOIN t_user merchant
+            ON merchant.user_id = t.product_owner_id
+        WHERE t.product_id = #{id}
+    </select>
+</mapper>
