@@ -29,8 +29,8 @@ public class MerchantInterceptor implements HandlerInterceptor {
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		Map<String, Object> data = (Map<String, Object>) request.getAttribute("data");
-		Integer role = (Integer) data.get("role");
+		Map<String, String> data = (Map<String, String>) request.getAttribute("data");
+		Integer role = Integer.valueOf(data.get("role"));
 		if (role.equals(Role.ROLE_MERCHANT)) {
 			return true;
 		}

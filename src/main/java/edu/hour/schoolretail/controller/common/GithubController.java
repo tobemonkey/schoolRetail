@@ -43,7 +43,7 @@ public class GithubController {
 	public Result callback(String code, HttpSession session, HttpServletResponse response) {
 		log.info("获取 github 用户 code：{}", code);
 
-		Map<String, String> map = githubUserService.callback(code);
+		Map<String, String> map = githubUserService.callback(code, response);
 		String url = map.get("url");
 		// 如果没有对应的键，就返回 null
 		session.setAttribute("data", map.get("data"));
@@ -65,9 +65,9 @@ public class GithubController {
 	 * @return
 	 */
 	@GetMapping("/bind/{token}")
-	public ModelAndView bind(@PathVariable("token") String token, HttpSession session) {
-		session.setAttribute("token", token);
-		return new ModelAndView("common/auth/github");
+	public ModelAndView bind(@PathVariable("token") String token) {
+		log.info("token 为 {} 的用户申请绑定", token);
+		return new ModelAndView("common/user/auth/github");
 	}
 
 
@@ -85,7 +85,7 @@ public class GithubController {
 	@PostMapping("/commit/{token}")
 	public Result commit(@PathVariable("token") String token,
 	                     @Validated(LoginByAuthGroup.class) @RequestBody LoginAndRegisterDto loginAndRegisterDto,
-	                     BindingResult result) {
+	                     BindingResult result, HttpServletResponse response) {
 
 		if (result.hasErrors()) {
 			log.info("传入的信息为：{}", loginAndRegisterDto);
@@ -97,7 +97,7 @@ public class GithubController {
 			return Result.failForSystem("系统出错，请联系管理员：18046863263");
 		}
 
-		Map<String, Object> commit = githubUserService.commit(token, loginAndRegisterDto);
+		Map<String, Object> commit = githubUserService.commit(token, loginAndRegisterDto, response);
 		String status = (String) commit.get("status");
 		if (status.equals(ExceptionEnum.COMMON_SUCCESS.getStatus())) {
 			return Result.success(commit);

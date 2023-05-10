@@ -22,10 +22,6 @@ public class ProductDTO implements Serializable {
 
 	private static final long serialVersionUID = -1419312843114147977L;
 
-	@JsonProperty("token")
-	@NotBlank(message = "token不能为空")
-	private String token;
-
 	@JsonProperty("category")
 	@Pattern(regexp = "^[\\d]{3}$", message = "商品种类选择错误")
 	private String category;
@@ -51,20 +47,6 @@ public class ProductDTO implements Serializable {
 	private MultipartFile img;
 
 
-
-	public ProductDTO() {
-	}
-
-	public ProductDTO(@NotBlank(message = "token不能为空") String token, @Pattern(regexp = "^[\\d]{3}$", message = "商品种类选择错误") String category, @NotBlank(message = "商品名称不能为空") String name, @NotBlank(message = "商品描述不能为空") String desc, @Digits(fraction = 0, integer = 7, message = "库存非法，必须为整数，不限量请用负数，且库存量不能超过千万") Integer stock, @Digits(integer = 7, fraction = 2, message = "价格非法，价格不能超过千万，且小数位数不能超过两位") BigDecimal price, @NotNull(message = "商品图片不能为空") MultipartFile img) {
-		this.token = token;
-		this.category = category;
-		this.name = name;
-		this.desc = desc;
-		this.stock = stock;
-		this.price = price;
-		this.img = img;
-	}
-
 	public Product toProduct() {
 		Product product = new Product();
 		product.setCategoryId(this.getCategory());
@@ -75,13 +57,15 @@ public class ProductDTO implements Serializable {
 		return product;
 	}
 
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
+	@Override
+	public String toString() {
+		return "ProductDTO{" +
+				"category='" + category + '\'' +
+				", name='" + name + '\'' +
+				", desc='" + desc + '\'' +
+				", stock=" + stock +
+				", price=" + price +
+				'}';
 	}
 
 	public String getCategory() {

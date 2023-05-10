@@ -4,6 +4,7 @@ import edu.hour.schoolretail.dto.LoginAndRegisterDto;
 import edu.hour.schoolretail.entity.GithubUser;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -16,9 +17,10 @@ public interface GithubUserService extends IService<GithubUser> {
 	/**
 	 * github 用户验证后调用的回调函数，一般用来保存用户的信息
 	 * @param code
+	 * @param response
 	 * @return
 	 */
-	Map<String, String> callback(String code);
+	Map<String, String> callback(String code, HttpServletResponse response);
 
 	/**
 	 * 发送邮件
@@ -32,5 +34,5 @@ public interface GithubUserService extends IService<GithubUser> {
 	 * @param loginAndRegisterDto
 	 * @return
 	 */
-	Map<String, Object> commit(String token, LoginAndRegisterDto loginAndRegisterDto);
+	Map<String, Object> commit(String token, LoginAndRegisterDto loginAndRegisterDto, HttpServletResponse response);
 }

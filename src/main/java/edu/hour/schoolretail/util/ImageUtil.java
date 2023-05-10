@@ -35,6 +35,23 @@ public class ImageUtil {
 	}
 
 	/**
+	 * 获取用户头像绝对路径路径
+	 * @param extension
+	 * @param filePathConstant
+	 * @param filename
+	 * @return
+	 */
+	public static String getUserImageAbsolutePath(String extension, String filePathConstant, String filename) {
+		String directory = getSaveFileDirectory(filePathConstant);
+		filename = filename + extension;
+		String path = IMAGE_BASE_PATH + directory;
+		while (checkFilePath(path + filename)) {
+			filename = getRandomFilename();
+		}
+		return (path + filename).replaceAll("/", Matcher.quoteReplacement(SEPARATOR));
+	}
+
+	/**
 	 * 获取图片文件的绝对路径
 	 * @param filePathConstant
 	 * @param otherInfo
@@ -57,7 +74,7 @@ public class ImageUtil {
 	 * @return
 	 */
 	private static String getSaveFileDirectory(String filePathConstant, String... otherInfo) {
-		StringBuilder res = new StringBuilder(filePathConstant + "/");
+		StringBuilder res = new StringBuilder(filePathConstant);
 		for (String info : otherInfo) {
 			res.append(info).append("/");
 		}

@@ -1,6 +1,8 @@
 package edu.hour.schoolretail.service.impl;
 
 import cn.hutool.http.HttpUtil;
+import javax.servlet.http.HttpServletResponse;
+
 import com.alibaba.fastjson.JSON;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,13 +17,10 @@ import edu.hour.schoolretail.exception.LoginAndRegisterException;
 import edu.hour.schoolretail.mapper.UserMapper;
 import edu.hour.schoolretail.service.GithubUserService;
 import edu.hour.schoolretail.mapper.GithubUserMapper;
-import edu.hour.schoolretail.util.EmailUtil;
-import edu.hour.schoolretail.util.ExceptionUtil;
-import edu.hour.schoolretail.util.JWTUtil;
-import edu.hour.schoolretail.util.SnowFlakeUtil;
+import edu.hour.schoolretail.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,13 +64,13 @@ public class GithubUserServiceImpl extends ServiceImpl<GithubUserMapper, GithubU
 	private GithubUserMapper githubUserMapper;
 
 
-	private static final String INDEX = "https://39b456804w.oicp.vip";
+	private static final String INDEX = "http://localhost:8080";
 
 	@Resource
 	private EmailUtil emailUtil;
 
 	@Resource
-	private RedisTemplate<String, Object> redisTemplate;
+	private StringRedisTemplate stringRedisTemplate;
 
 
 	/**
@@ -82,7 +81,7 @@ public class GithubUserServiceImpl extends ServiceImpl<GithubUserMapper, GithubU
 	 * @return
 	 */
 	@Override
-	public Map<String, String> callback(String code) {
+	public Map<String, String> callback(String code, HttpServletResponse response) {
 
 		Map<String, String> map = new HashMap<>();
 
@@ -98,15 +97,18 @@ public class GithubUserServiceImpl extends ServiceImpl<GithubUserMapper, GithubU
 
 		// 查看该用户是否已经注册
 		User user = userMapper.selectByGithubId(githubUser.getId());
-		// 如果没有登入过，就先进行注册，并将用户信息存储在 redis
+		// 如果没有注册过 github 信息，就先进行注册，并将用户信息存储在 redis
 		if (user == null) {
 			long id = SnowFlakeUtil.nextId();
 			String token = JWTUtil.createToken(id, Role.ROLE_USER, 10, Calendar.MINUTE);
 			map.put("url", INDEX + "/login/oauth2/github/bind/" + token);
 			// 存储用户信息
-			redisTemplate.opsForValue().set(String.valueOf(id), githubUser, Duration.ofMinutes(10));
+			stringRedisTemplate.opsForValue().set(String.valueOf(id), body, Duration.ofMinutes(10));
 			return map;
 		}
+		// 获取 token
+		String token = JWTUtil.createToken(user.getId(), user.getIdentity());
+		response.addCookie(CookieUtil.getCookie("token", token));
 		// 如果有对应的用户，就取出用户信息并返回主页面
 		map.put("url", INDEX);
 		map.put("data", JSON.toJSONString(user));
@@ -133,7 +135,7 @@ public class GithubUserServiceImpl extends ServiceImpl<GithubUserMapper, GithubU
 				throw new LoginAndRegisterException("验证码生成异常！");
 			}
 			// 将验证码保存到 redis
-			redisTemplate.opsForValue().set(RedisKeys.KEY_GITHUB_AUTH + target, verifyCode, expire, TimeUnit.MINUTES);
+			stringRedisTemplate.opsForValue().set(RedisKeys.KEY_GITHUB_AUTH + target, verifyCode, expire, TimeUnit.MINUTES);
 		} catch (MessagingException e) {
 			log.error("邮件发送时出错！");
 		}
@@ -143,7 +145,7 @@ public class GithubUserServiceImpl extends ServiceImpl<GithubUserMapper, GithubU
 
 	@Override
 	@Transactional
-	public Map<String, Object> commit(String token, LoginAndRegisterDto loginAndRegisterDto) {
+	public Map<String, Object> commit(String token, LoginAndRegisterDto loginAndRegisterDto, HttpServletResponse response) {
 		HashMap<String, Object> map = new HashMap<>();
 		Long githubInfoId = null;
 		try {
@@ -158,7 +160,7 @@ public class GithubUserServiceImpl extends ServiceImpl<GithubUserMapper, GithubU
 		}
 
 		// 验证码比对
-		String verify = (String) redisTemplate.opsForValue().get(RedisKeys.KEY_GITHUB_AUTH + loginAndRegisterDto.getEmail());
+		String verify = stringRedisTemplate.opsForValue().get(RedisKeys.KEY_GITHUB_AUTH + loginAndRegisterDto.getEmail());
 		if (!loginAndRegisterDto.getVerifyCode().equals(verify)) {
 			ExceptionUtil.putException(map, ExceptionEnum.COMMON_VERIFY_ERROR);
 			return map;
@@ -167,11 +169,11 @@ public class GithubUserServiceImpl extends ServiceImpl<GithubUserMapper, GithubU
 		// 查看邮箱已经被绑定，
 		Long userId = userMapper.getUserIdByEmail(loginAndRegisterDto.getEmail());
 		if (userId != null) {
-			// 如果存在就将该账号与github账号绑定
-			bindGithub(githubInfoId, userId, loginAndRegisterDto.getPassword(), map);
+			// 如果存在就将该账号与github账号绑定并返回主页
+			bindGithub(githubInfoId, userId, map, response);
 		} else {
 			// 记录用户信息以及对应的github信息
-			registerUserInfo(githubInfoId, loginAndRegisterDto, map);
+			registerUserInfo(githubInfoId, loginAndRegisterDto, map, response);
 		}
 
 		return map;
@@ -182,19 +184,25 @@ public class GithubUserServiceImpl extends ServiceImpl<GithubUserMapper, GithubU
 	 * @param githubInfoId
 	 * @param userId
 	 */
-	private void bindGithub(Long githubInfoId, Long userId, String password, HashMap<String, Object> map) {
-		GithubUser githubUser = (GithubUser) redisTemplate.opsForValue().get(String.valueOf(githubInfoId));
+	private void bindGithub(Long githubInfoId, Long userId, HashMap<String, Object> map, HttpServletResponse response) {
+		GithubUser githubUser = JSON.parseObject(stringRedisTemplate.opsForValue().get(String.valueOf(githubInfoId)), GithubUser.class);
 		if (githubUser == null) {
 			ExceptionUtil.putException(map, ExceptionEnum.AUTH_USER_INFO_EXPIRE);
 			return;
 		}
+		// 插入 github 用户信息
 		githubUser.setUserId(userId);
-		githubUserMapper.insert(githubUser);
-		ExceptionUtil.putException(map, ExceptionEnum.COMMON_SUCCESS);
-		User temp = userMapper.selectByGithubId(githubUser.getId());
-		userMapper.updatePassword(userId, password);
+		try {
+			githubUserMapper.insert(githubUser);
+		} catch (Exception e) {
+			ExceptionUtil.putException(map, ExceptionEnum.REGISTER_HAD_USER);
+			return ;
+		}
+		map.put("status", ExceptionEnum.COMMON_SUCCESS.getStatus());
+		map.put("msg", "用户绑定成功，即将跳转首页");
+		// 添加 cookie 并返回首页
+		response.addCookie(CookieUtil.getCookie("token", JWTUtil.createToken(userId, Role.ROLE_USER)));
 		map.put("url", INDEX);
-		map.put("data", temp);
 	}
 
 	/**
@@ -203,9 +211,9 @@ public class GithubUserServiceImpl extends ServiceImpl<GithubUserMapper, GithubU
 	 * @param loginAndRegisterDto
 	 * @param map
 	 */
-	private void registerUserInfo(Long id, LoginAndRegisterDto loginAndRegisterDto, HashMap<String, Object> map) {
+	private void registerUserInfo(Long id, LoginAndRegisterDto loginAndRegisterDto, HashMap<String, Object> map, HttpServletResponse response) {
 		User user = loginAndRegisterDto.toUser();
-		GithubUser githubUser = (GithubUser) redisTemplate.opsForValue().get(String.valueOf(id));
+		GithubUser githubUser = JSON.parseObject(stringRedisTemplate.opsForValue().get(String.valueOf(id)), GithubUser.class);
 		if (githubUser == null) {
 			ExceptionUtil.putException(map, ExceptionEnum.AUTH_USER_INFO_EXPIRE);
 			return;
@@ -213,31 +221,32 @@ public class GithubUserServiceImpl extends ServiceImpl<GithubUserMapper, GithubU
 
 		// 设置用户信息
 		user.setEmail(loginAndRegisterDto.getEmail());
-		user.setPassword(loginAndRegisterDto.getPassword());
 		user.setId(id);
+		user.setIdentity(Role.ROLE_USER);
 		user.setImg(githubUser.getAvatarUrl());
 		user.setSign(githubUser.getBio());
 		user.setNickname(githubUser.getLogin());
 		user.setCreateTime(LocalDateTime.now());
+		user.setUpdateTime(LocalDateTime.now());
+		// 设置默认密码
+		user.setPassword(MD5Utils.generateMD5("123456"));
 
 		// 用户信息插入，同时github的也插入
 		try {
-			userMapper.insertUser(user);
+			userMapper.insert(user);
+			githubUser.setUserId(user.getId());
 			githubUserMapper.insert(githubUser);
-		} catch (SQLException sqlException) {
-			log.error("用户信息插入失败，错误信息：{}", sqlException.getMessage());
-			ExceptionUtil.putException(map, ExceptionEnum.REGISTER_HAD_USER);
-			return;
 		} catch (Exception e) {
 			log.error("用户信息插入失败，错误信息：{}", e.getMessage());
 			ExceptionUtil.putException(map, ExceptionEnum.SYSTEM_EXCEPTION);
 			return;
 		}
 
-		User temp = userMapper.selectByGithubId(githubUser.getId());
-		ExceptionUtil.putException(map, ExceptionEnum.COMMON_SUCCESS);
+		// 添加 cookie 并返回首页
+		response.addCookie(CookieUtil.getCookie("token", JWTUtil.createToken(id, Role.ROLE_USER)));
+		map.put("status", ExceptionEnum.COMMON_SUCCESS.getStatus());
+		map.put("msg", "新用户注册成功，默认密码为：123456，请及时修改哦");
 		map.put("url", INDEX);
-		map.put("data", temp);
 	}
 
 	/**

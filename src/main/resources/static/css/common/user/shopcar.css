@@ -3,6 +3,39 @@
     background-color: #e8e2e0;
 }
 
+/* 如果购物车中没有内容 */
+.empty {
+    width: 900px;
+    height: 400px;
+    margin: 0 auto;
+    padding: 20px 20px;
+    border-radius: 30px;
+    color: #aaa;
+    background-color: #fff;
+}
+
+.empty p {
+    width: 400px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 16px;
+    margin: 100px auto;
+}
+
+.empty p::before {
+    display: block;
+    height: 100px;
+    font-size: 150px;
+    content: '\e93a';
+    font-family: 'icomoon';
+    margin: 10px auto;
+}
+.empty p:hover {
+    cursor: pointer;
+}
+
+
 /* 内容显示区 */
 .body .content {
     width: 900px;
@@ -110,6 +143,7 @@
 }
 
 .body .cart-table-th .th-info {
+    margin-left: 150px;
     width: 300px;
 }
 
@@ -203,6 +237,10 @@
 
 .cart-table-td li .td-operation {
     width: 100px;
+}
+
+.cart-table-td li .td-operation a {
+    margin: 10px auto;
 }
 
 .cart-table-td li .td-operation a:hover {

@@ -6,16 +6,24 @@
 
     <resultMap id="BaseResultMap" type="edu.hour.schoolretail.entity.User">
         <id property="id" column="user_id" jdbcType="BIGINT"/>
-        <result property="password" column="user_password" jdbcType="VARCHAR"/>
         <result property="email" column="user_email" jdbcType="VARCHAR"/>
+        <result property="password" column="user_password" jdbcType="CHAR"/>
         <result property="nickname" column="user_nickname" jdbcType="VARCHAR"/>
-
         <result property="sign" column="user_sign" jdbcType="VARCHAR"/>
         <result property="address" column="user_address" jdbcType="VARCHAR"/>
         <result property="img" column="user_img" jdbcType="VARCHAR"/>
-        <result property="online" column="user_online" javaType="INT"/>
+        <result property="identity" column="user_identity" jdbcType="INTEGER"/>
+        <result property="online" column="user_online" jdbcType="INTEGER"/>
         <result property="createTime" column="user_create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="user_update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,user_email,user_password,
+        user_nickname,user_sign,user_address,
+        user_img,user_identity,user_online,
+        user_create_time,user_update_time
+    </sql>
 
     <resultMap id="CommonUserMap" type="edu.hour.schoolretail.entity.User">
         <id property="id" column="user_id" jdbcType="BIGINT"/>
@@ -23,18 +31,15 @@
         <result property="img" column="user_img" jdbcType="VARCHAR"/>
         <result property="nickname" column="user_nickname" jdbcType="VARCHAR"/>
         <result property="online" column="user_online" javaType="INT"/>
+        <result property="identity" column="user_identity" javaType="INT"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        user_id,user_password,
-        user_email,user_nickname,
-        user_sign,user_address,user_img,
-        user_create_time
-    </sql>
 
     <insert id="insertUser">
-        INSERT INTO `t_user`(user_id, user_email, user_password, user_nickname, user_create_time)
-        VALUES (#{user.id}, #{user.email}, #{user.password}, #{user.nickname}, #{user.createTime})
+        INSERT INTO `t_user`(user_id, user_email, user_password, user_img, user_nickname, user_identity,
+                             user_create_time, user_update_time)
+        VALUES (#{user.id}, #{user.email}, #{user.password}, #{user.img}, #{user.nickname}, #{user.identity},
+                #{user.createTime}, #{user.updateTime})
     </insert>
 
     <update id="changeOnline">
@@ -54,6 +59,21 @@
         SET t.user_password = #{password}
         WHERE t.user_email = #{email}
     </update>
+    <update id="rebindUserEmail">
+        UPDATE t_user t
+        SET t.user_email = #{email}
+        WHERE t.user_id = #{id}
+    </update>
+    <update id="updateOnlineStatus">
+        UPDATE t_user t
+        SET t.user_online = #{status}
+        WHERE t.user_id = #{id}
+    </update>
+    <update id="updateUserRole">
+        UPDATE t_user t
+        SET t.user_identity = 3 - t.user_identity
+        WHERE t.user_id = #{id}
+    </update>
 
     <select id="loginByPassword" resultMap="CommonUserMap">
         SELECT t.user_online, t.user_id, t.user_identity
@@ -72,10 +92,11 @@
     </select>
 
     <select id="selectByGithubId" resultMap="CommonUserMap">
-        SELECT t.user_email, t.user_online, t.user_img, t.user_nickname
+        SELECT t.user_id, t.user_email, t.user_online, t.user_img, t.user_nickname, t.user_identity
         FROM t_user t
                  LEFT JOIN t_github_user github
-                           ON github.github_user_id = #{githubId}
+                           ON github.github_id = #{githubId}
+        WHERE github.github_user_id = t.user_id
     </select>
 
     <select id="getUserIdByEmail" resultType="java.lang.Long">
@@ -84,15 +105,42 @@
         WHERE t.user_email = #{email}
     </select>
 
-    <select id="selectSimpleShowInfo" resultType="edu.hour.schoolretail.vo.UserSimpleShowVO">
-        SELECT t.user_img AS `image`,
+    <select id="selectSimpleShowInfo" resultType="edu.hour.schoolretail.vo.user.UserSimpleShowVO">
+        SELECT t.user_img      AS `image`,
                (
                    SELECT COUNT(1)
-                    FROM t_shopcar car
-                    WHERE car.car_user_id = t.user_id
-                ) AS `count`
+                   FROM t_shopcar car
+                   WHERE car.car_user_id = #{id}
+               )               AS `count`,
+               t.user_identity AS 'identity'
         FROM t_user t
+        WHERE t.user_id = #{id}
+    </select>
 
+    <select id="selectUserDetailInfo" resultType="edu.hour.schoolretail.vo.user.UserDetailInfoVO">
+        SELECT t.user_img      AS `image`,
+               t.user_nickname AS 'nickname',
+               t.user_identity AS `role`,
+               t.user_email    AS 'email',
+               t.user_address  AS 'address',
+               t.user_sign     AS 'signature'
+        FROM t_user t
+        WHERE t.user_id = #{id}
+    </select>
+    <select id="existsUser" resultType="java.lang.Boolean">
+        SELECT COUNT(1)
+        FROM t_user t
+        WHERE t.user_id = #{id}
+    </select>
+    <select id="selectUserAddress" resultType="java.lang.String">
+        SELECT t.user_address
+        FROM t_user t
+        WHERE t.user_id = #{id}
+    </select>
+    <select id="selectIdentity" resultType="java.lang.Integer">
+        SELECT t.user_identity
+        FROM t_user t
+        WHERE t.user_id = #{id}
     </select>
 
 

@@ -27,13 +27,11 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner>
 	 * 查询所有的轮播图图片
 	 * @return
 	 */
-	@Cacheable(value = "broadcast")
 	@Override
 	public List<BannerVO> selectAllBroadcast() {
 		return bannerMapper.selectAllBroadcast();
 	}
 
-	@Cacheable(value = "recommend")
 	@Override
 	public List<BannerVO> selectAllRecommend() {
 		return bannerMapper.selectAllRecommend();

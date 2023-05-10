@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>github bind</title>
+    <title>github 绑定</title>
     <!-- 引入css 和图标图的css  引入才可以生效 -->
     <link rel="icon" th:href="@{/static/favicon.ico}" type="image/x-icon" />
-    <link rel="stylesheet" th:href="@{/static/css/auth/auth.css}">
+    <link rel="stylesheet" th:href="@{/static/css/common/user/auth/auth.css}">
 
 
 </head>
@@ -16,8 +16,7 @@
         <h1>绑定邮箱</h1>
         <hr/>
         <input type="text" id="email" placeholder="邮箱">
-        <input type="password" id="password" placeholder="密码">
-    
+
         <div class="verify">
             <input type="text" id="verify" placeholder="验证码">
             <button type="button" id="get_code">获取验证码</button>
@@ -27,6 +26,6 @@
     </div>
 </body>
 <script th:src="@{/static/js/auth/auth.js}"></script>
-<script th:src="@{/static/js/jquery.js}"></script>
-<script th:src="@{/static/js/tip.js}"></script>
+<script th:src="@{/static/js/common/jquery-3.6.4.js}"></script>
+<script th:src="@{/static/js/common/tip.js}"></script>
 </html>

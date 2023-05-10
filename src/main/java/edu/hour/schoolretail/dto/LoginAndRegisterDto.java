@@ -1,9 +1,6 @@
 package edu.hour.schoolretail.dto;
 
-import edu.hour.schoolretail.common.validated.loginAndRegister.LoginByAuthGroup;
-import edu.hour.schoolretail.common.validated.loginAndRegister.LoginByPasswordGroup;
-import edu.hour.schoolretail.common.validated.loginAndRegister.LoginByTokenGroup;
-import edu.hour.schoolretail.common.validated.loginAndRegister.RegisterGroup;
+import edu.hour.schoolretail.common.validated.loginAndRegister.*;
 import edu.hour.schoolretail.entity.User;
 import lombok.Data;
 
@@ -19,7 +16,7 @@ import javax.validation.constraints.Pattern;
 @Data
 public class LoginAndRegisterDto {
 
-    private static final String PASSWORD_PATTERN = "^[a-zA-Z0-9]{10,16}$";
+    private static final String PASSWORD_PATTERN = "^[a-zA-Z0-9]{6,16}$";
 
     /**
      * 密码
@@ -30,14 +27,14 @@ public class LoginAndRegisterDto {
     /**
      * 邮箱
      */
-    @Email(message = "邮箱格式错误，请检查", groups = {LoginByPasswordGroup.class, LoginByTokenGroup.class, LoginByAuthGroup.class, RegisterGroup.class})
-    @NotBlank(message = "邮箱不能为空", groups = {LoginByPasswordGroup.class, LoginByTokenGroup.class, LoginByAuthGroup.class, RegisterGroup.class})
+    @Email(message = "邮箱格式错误，请检查", groups = {LoginByPasswordGroup.class, LoginByTokenGroup.class, LoginByAuthGroup.class, RegisterGroup.class, BindEmailGroup.class})
+    @NotBlank(message = "邮箱不能为空", groups = {LoginByPasswordGroup.class, LoginByTokenGroup.class, LoginByAuthGroup.class, RegisterGroup.class, BindEmailGroup.class})
     private String email;
 
     /**
      * 验证码
      */
-    @NotBlank(message = "验证码不能为空", groups = {LoginByAuthGroup.class, RegisterGroup.class})
+    @NotBlank(message = "验证码不能为空", groups = {LoginByAuthGroup.class, RegisterGroup.class, BindEmailGroup.class})
     private String verifyCode;
 
 

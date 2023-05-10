@@ -27,11 +27,13 @@
 
 /*顶部快捷导航*/
 .shortcut {
-    position: relative;
     height: 60px;
-    background-color: #2f2f2f;
+    min-width: 1200px;
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 #eee;
     line-height: 60px;
     font-size: 1rem;
+    border-bottom: 1px solid #eee;
 }
 
 .shortcut li {
@@ -43,6 +45,11 @@
     height: 12px;
     background-color: #666;
     margin: 24px 15px;
+}
+
+.shortcut .fr ul li:nth-child(odd):hover {
+    color: #c81623;
+    cursor: pointer;
 }
 
 .shortcut ul .shopcar::before {
@@ -64,9 +71,9 @@
 }
 
 .shortcut ul img {
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
 }
 
 

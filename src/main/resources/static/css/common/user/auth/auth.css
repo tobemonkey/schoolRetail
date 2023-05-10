@@ -59,7 +59,7 @@ hr {
     
 }
 
-.container #email, #password {
+.container #email {
     display: block;
     width: 70%;
     height: 2.2rem;

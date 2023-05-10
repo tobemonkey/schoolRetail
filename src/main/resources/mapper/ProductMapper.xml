@@ -5,23 +5,23 @@
 <mapper namespace="edu.hour.schoolretail.mapper.ProductMapper">
 
     <resultMap id="BaseResultMap" type="edu.hour.schoolretail.entity.Product">
-            <id property="id" column="product_id" jdbcType="BIGINT"/>
-            <result property="name" column="product_name" jdbcType="VARCHAR"/>
-            <result property="categoryId" column="product_category_id" jdbcType="INTEGER"/>
-            <result property="ownerId" column="product_owner_id" jdbcType="BIGINT"/>
-            <result property="desc" column="product_desc" jdbcType="VARCHAR"/>
-            <result property="image" column="product_image" jdbcType="VARCHAR"/>
-            <result property="stock" column="product_stock" jdbcType="INTEGER"/>
-            <result property="price" column="product_price" jdbcType="DECIMAL"/>
-            <result property="status" column="product_status" jdbcType="INTEGER"/>
-            <result property="createTime" column="product_create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="product_update_time" jdbcType="TIMESTAMP"/>
+        <id property="id" column="product_id" jdbcType="BIGINT"/>
+        <result property="name" column="product_name" jdbcType="VARCHAR"/>
+        <result property="categoryId" column="product_category_id" jdbcType="INTEGER"/>
+        <result property="ownerId" column="product_owner_id" jdbcType="BIGINT"/>
+        <result property="desc" column="product_desc" jdbcType="VARCHAR"/>
+        <result property="image" column="product_image" jdbcType="VARCHAR"/>
+        <result property="stock" column="product_stock" jdbcType="INTEGER"/>
+        <result property="price" column="product_price" jdbcType="DECIMAL"/>
+        <result property="status" column="product_status" jdbcType="INTEGER"/>
+        <result property="createTime" column="product_create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="product_update_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <resultMap id="CategoryGoodsMap" type="map">
-        <result property="categoryName" column="category_name" jdbcType="VARCHAR" />
-        <result property="categoryImage" column="category_image" jdbcType="VARCHAR" />
-        <result property="categoryAnchor" column="category_anchor_id" jdbcType="VARCHAR" />
+        <result property="categoryName" column="category_name" jdbcType="VARCHAR"/>
+        <result property="categoryImage" column="category_image" jdbcType="VARCHAR"/>
+        <result property="categoryAnchor" column="category_anchor_id" jdbcType="VARCHAR"/>
         <collection property="product" javaType="list" ofType="edu.hour.schoolretail.vo.shop.ProductVO">
             <id property="id" column="product_id" jdbcType="BIGINT"/>
             <result property="name" column="product_name" jdbcType="VARCHAR"/>
@@ -31,6 +31,7 @@
     </resultMap>
 
     <resultMap id="GoodsDetailInfo" type="edu.hour.schoolretail.vo.shop.ProductDetailVO">
+        <result property="merchantId" column="product_owner_id" jdbcType="BIGINT"/>
         <result property="name" column="product_name" jdbcType="VARCHAR"/>
         <result property="desc" column="product_desc" jdbcType="VARCHAR"/>
         <result property="image" column="product_image" jdbcType="VARCHAR"/>
@@ -46,20 +47,71 @@
         product_stock,product_price,product_status,
         product_create_time,product_update_time
     </sql>
+    <update id="reduceGoodsStock">
+        UPDATE t_product t
+        SET t.product_stock = t.product_stock - #{count}
+        WHERE t.product_id = #{goodsId}
+    </update>
+    <update id="backStock">
+        UPDATE t_product t
+        SET t.product_stock = t.product_stock + #{goodsNum}
+        WHERE t.product_id = #{goodsId}
+    </update>
 
     <select id="selectAllCategoryGoods" resultMap="CategoryGoodsMap">
-        SELECT tc.category_name, tp.product_id, tp.product_name, tp.product_image, tp.product_price, tc.category_image, tc.category_anchor_id
+        SELECT tc.category_name,
+               tp.product_id,
+               tp.product_name,
+               tp.product_image,
+               tp.product_price,
+               tc.category_image,
+               tc.category_anchor_id
         FROM t_product tp
-        JOIN t_category tc
-            ON tp.product_category_id = tc.category_id
+                 JOIN t_category tc
+                      ON tp.product_category_id = tc.category_id
         WHERE tp.product_status != 0
     </select>
 
     <select id="selectGoodsInfo" resultMap="GoodsDetailInfo">
-        SELECT t.product_name, t.product_image, t.product_desc, t.product_price, t.product_stock, t.product_status, merchant.user_address
-            FROM t_product t
-            JOIN t_user merchant
-            ON merchant.user_id = t.product_owner_id
+        SELECT t.product_owner_id,
+               t.product_name,
+               t.product_image,
+               t.product_desc,
+               t.product_price,
+               t.product_stock,
+               t.product_status,
+               merchant.user_address
+        FROM t_product t
+                 JOIN t_user merchant
+                      ON merchant.user_id = t.product_owner_id
         WHERE t.product_id = #{id}
     </select>
+    <select id="selectGoodsPrice" resultType="java.math.BigDecimal">
+        SELECT t.product_price
+        FROM t_product t
+        WHERE t.product_id = #{goodsId}
+    </select>
+    <select id="selectGoodsOrderInfo" resultType="edu.hour.schoolretail.entity.Product">
+        SELECT t.product_stock AS `stock`, t.product_price AS 'price'
+        FROM t_product t
+        WHERE t.product_id = #{id}
+    </select>
+    <select id="selectGoodsStock" resultType="java.lang.Integer">
+        SELECT t.product_stock
+        FROM t_product t
+        WHERE t.product_id = #{id}
+    </select>
+    <select id="selectGoodsName" resultType="java.lang.String">
+        SELECT t.product_name
+        FROM t_product t
+        WHERE t.product_id = #{goodsId}
+    </select>
+    <select id="makeUpShopInfo" resultType="edu.hour.schoolretail.vo.order.OrderVO">
+        SELECT t.product_owner_id AS 'merchantId', user.user_address AS 'sendAddress'
+        FROM t_product t
+                 LEFT JOIN t_user user
+                           ON user.user_id = t.product_owner_id
+        WHERE t.product_id = #{goodsId}
+    </select>
+
 </mapper>

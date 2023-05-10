@@ -10,7 +10,9 @@ public enum ResultStateEnum {
     // 操作成功
     SUCCESS("0001", "操作成功"),
 
-    ACOUNT_LOGIN_BY_OTHERS("0002", "账号异地登入，已挤下，如不是本人操作，请尽快修改密码"),
+    ACCOUNT_LOGIN_BY_OTHERS("0002", "账号异地登入，已挤下，如不是本人操作，请尽快修改密码"),
+
+    ROLE_NOT_RIGHT("0003", "用户身份不符合"),
 
     // 系统错误：代码以-100 开头
     SYSTEM_ERROR("-1001", "系统出错，请联系管理员，联系电话：18046863263"),

@@ -31,7 +31,7 @@
 		<form>
 			<h1>用户登入</h1>
 			<div class="social-container">
-				<a href="https://github.com/login/oauth/authorize?client_id=971dca317a3eede01103&redirect_uri=https%3A%2F%2F39b456804w.oicp.vip%2Flogin%2Foauth2%2Fgithub%2Fcallback&scope=user" >
+				<a href="https://github.com/login/oauth/authorize?client_id=971dca317a3eede01103&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Flogin%2Foauth2%2Fgithub%2Fcallback&scope=user" >
 					<img th:src="@{/static/images/iconfont/github.png}"/>
 				</a>
 			</div>
@@ -69,9 +69,9 @@
 
 </div>
 </body>
-<script th:src="@{/static/js/jquery-3.6.4.js}"></script>
-<script th:src="@{/static/js/axios.js}"></script>
-<script th:src="@{/static/js/loginAndRegister.js}"></script>
-<script th:src="@{/static/js/tip.js}"></script>
+<script th:src="@{/static/js/common/jquery-3.6.4.js}"></script>
+<script th:src="@{/static/js/common/tip.js}"></script>
+<script th:src="@{/static/js/common/common.js}"></script>
+<script th:src="@{/static/js/user/loginAndRegister.js}"></script>
 
 </html>

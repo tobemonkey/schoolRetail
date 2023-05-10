@@ -1,6 +1,5 @@
 package edu.hour.schoolretail.websocket;
 
-import edu.hour.schoolretail.websocket.WebSocketHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -23,6 +22,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
 	@Resource
 	private WebSocketHandler webSocketHandler;
 
+	@Resource
+	private HttpSessionIdHandshakeInterceptor httpSessionIdHandshakeInterceptor;
 
 	@Bean
 	public ServerEndpointExporter serverEndpointExporter() {
@@ -32,7 +33,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-		registry.addHandler(webSocketHandler, "/loginAndRegister/login/**")
+		registry.addHandler(webSocketHandler, "/websocket/")
+				.addInterceptors(httpSessionIdHandshakeInterceptor)
 				.setAllowedOrigins("*");
 	}
 

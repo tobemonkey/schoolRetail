@@ -7,41 +7,19 @@
     <meta name="keywords" content="校园零售, 购物, S2B2C, DSHOP">
 
     <!-- 引入图标 -->
-    <link rel="icon" href="../../static/favicon.ico"  type="image/x-icon">
+    <link rel="icon" th:href="@{/static/favicon.ico}"  type="image/x-icon">
     <!-- 引入初始化样式 -->
-    <link rel="stylesheet" href="../../static/css/common/base.css">
+    <link rel="stylesheet" th:href="@{/static/css/common/base.css}">
     <!-- 引入公共样式 -->
-    <link rel="stylesheet" href="../../static/css/common/common.css">
-    <link rel="stylesheet" href="../../static/css/common/shoper/addProduct.css">
+    <link rel="stylesheet" th:href="@{/static/css/common/common.css}">
+    <link rel="stylesheet" th:href="@{/static/css/common/shoper/addProduct.css}">
 
-    <title>我的订单</title>
-
+    <title>增加商品</title>
 
 </head>
 <body>
-    <!-- 快捷导航模块 -->
-    <section class="shortcut">
-        <div class="w">
-            <div class="fl">
-                <ul>
-                    <li>DShop 欢迎您！&nbsp;</li>
-                    <li>
-                        <a class="style-red" href="https://39b456804w.oicp.vip/loginAndRegister">登入 & 注册</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="fr">
-                
-                <ul>
-                    <li class="shopcar">购物车<span class="count">99+</span></li>
-                    <li></li>
-                    <li>我的订单</li>
-                    <li></li>
-                    <li>我的信息</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+<!-- 快捷导航模块 -->
+<div th:insert="~{index::shortcut}"></div>
 
     <div class="info w">
         <h3 class="title">添加商品</h3>
@@ -113,4 +91,6 @@
     </footer>
 </body>
 
+<script th:src="@{/static/js/common/jquery-3.6.4.js}"></script>
+<script th:src="@{/static/js/common/common.js}"></script>
 </html>

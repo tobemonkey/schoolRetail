@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
  **/
 public class RegexTest {
 
-    private static final String PASSWORD_PATTERN = "^[a-zA-Z0-9]{10,16}$";
+    private static final String PASSWORD_PATTERN = "^[a-zA-Z0-9]{6,16}$";
 
     private static final String EMAIL_PATTERN = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
 

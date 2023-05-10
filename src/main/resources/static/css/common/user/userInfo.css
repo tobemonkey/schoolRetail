@@ -1,5 +1,5 @@
 .user-info {
-    width: 900px;
+    width: 1200px;
     height: 600px;
     margin: 40px auto;
     border-radius: 40px;
@@ -14,7 +14,7 @@
     margin: 30px 20px 0 30px;
 }
 
-/* 用户信息题目 */
+/* 用户信息 */
 .user-info .left h3 {
     font-size: 32px;
     border-bottom: 2px solid #ddd;
@@ -25,36 +25,47 @@
     position: absolute;
     width: 150px;
     height: 150px;
-    margin: 0 25px;
-    margin-top: 90px;
+    margin: 40px 25px 0;
 }
 
-.user-info .left #head-img img {
+#head-img img {
     width: 150px;
     height: 150px;
+    border-radius: 75px;
+    box-shadow: 0 0 10px 1px #4d4d4d;
+    margin: 0 0;
+}
+
+#head-img input {
+    display: none;
 }
 
 /* 更新用户信息按钮 */
-.user-info .left #update-info {
-    position: absolute;
-    bottom: 80px;
+.user-info .left button {
     width: 150px;
     height: 40px;
     border-radius: 20px;
     margin: 0 25px;
     background-color: #1f65fc;
+    color: #fff;
+}
+
+.user-info .left #update-info {
+    position: absolute;
+    bottom: 140px;
 }
 
 .user-info .left #update-password {
     position: absolute;
-    bottom: 10px;
-    width: 150px;
-    height: 40px;
-    border-radius: 20px;
-    margin: 0 25px;
-    background-color: #1f65fc;
+    bottom: 80px;
 }
 
+
+.user-info .left #change-role {
+    position: absolute;
+    bottom: 10px;
+    background: #ff4400;
+}
 
 /* 用户信息右侧布局 */
 .user-info .right {
@@ -99,12 +110,12 @@
     border: 1px solid #ddd;
     border-radius: 20px;
     overflow: hidden;
-    transition: all 0.3s;
+    /*transition: all 0.3s;*/
 }
 
-.user-info .right .sign textarea:hover {
-    border: 1px solid #ff5800;
-}
+/*.user-info .right .sign textarea:hover {*/
+/*    border: 1px solid #ff5800;*/
+/*}*/
 
 .user-info .right .sign .content p {
     position: absolute;
@@ -115,12 +126,21 @@
 }
 
 /* 用户地址 */
-.user-info .right .address .content {
-    padding-top: 8px;
+.user-info .right .address .city {
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 700;
 }
 
-.user-info .right .address .content select {
-    width: 100px;
+.user-info .right .address .desc {
+    height: 16px;
+    line-height: 16px;
+    font-size: 12px;
+}
+
+.user-info .right .address .content {
+    padding-top: 8px;
 }
 
 .user-info .right .address .content textarea {
@@ -128,20 +148,18 @@
     margin: 20px 0 0 100px;
 }
 
-
-.user-info .right .address .show textarea {
+.user-info .right .address .invisible {
     display: none;
-    resize:none;
-    outline: none; 
-    width: 298px;
-    height: 90px;
-    line-height: 30px;
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    overflow: hidden;
-    transition: all 0.3s;
+    width: 400px;
 }
+
+.user-info .right .address .invisible select {
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    margin: 10px 0;
+}
+
 
 /* 用户邮箱 */
 .user-info .right .email {
@@ -159,5 +177,22 @@
     height: 40px;
     border-radius: 20px;
     margin: 0 25px;
+    color: #fff;
+    background-color: #1f65fc;
+}
+
+.right .submit {
+    display: none;
+    height: 40px;
+    align-content: center;
+}
+
+.right .submit button {
+    display: block;
+    width: 150px;
+    height: 40px;
+    border-radius: 20px;
+    margin: 0 auto;
+    color: #fff;
     background-color: #1f65fc;
 }

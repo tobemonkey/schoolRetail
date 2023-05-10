@@ -3,10 +3,6 @@ package edu.hour.schoolretail.dto;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Map;
-
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
-
 /**
  * @Author 201926002057 戴毅
  * @Description

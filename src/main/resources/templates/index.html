@@ -17,47 +17,53 @@
 </head>
 <body>
     <!-- 快捷导航模块 -->
-    <section class="shortcut">
-        <div class="w">
+    <section class="shortcut" th:fragment="shortcut">
+        <div class="w" th:if="${userSimpleInfo == null}">
             <div class="fl">
-                <ul th:if="${userInfo == null}">
+                <ul >
                     <li>DShop 欢迎您！&nbsp;</li>
                     <li>
-                        <a class="style-red" href="https://39b456804w.oicp.vip/loginAndRegister">登入 & 注册</a>
+                        <a class="style-red" href="http://localhost:8080/loginAndRegister">登入 & 注册</a>
                     </li>
                 </ul>
-
             </div>
-            <div class="fr" th:if="${userInfo != null}">
-
+        </div>
+        <div class="w" th:if="${userSimpleInfo != null}">
+            <!-- logo 模块 -->
+            <div class="fl toIndex">
+                <h1><a href="http://localhost:8080/" title="DShop校园零售">DShop校园零售</a></h1>
+            </div>
+            <div class="fr" >
                 <ul>
-                    <li class="shopcar">购物车<span class="count" th:text="${userInfo.count}"></span></li>
+                    <li th:if="${userSimpleInfo.identity == 2}" class="addShop">添加商品</li>
+                    <li th:if="${userSimpleInfo.identity == 2}" ></li>
+                    <li class="shopcar">购物车<span class="count" th:text="${userSimpleInfo.count}"></span></li>
                     <li></li>
-                    <li>我的订单</li>
+                    <li class="order">我的订单</li>
                     <li></li>
-                    <li>
-                        <a><img src="../static/images/test/1.png"></a>
-                    </li>
+                    <li class="logout">退出账号</li>
+                    <li></li>
+                    <li class="image"><img th:src="${userSimpleInfo.image}"></li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <!-- header 模块 -->
+   <!-- &lt;!&ndash; header 模块 &ndash;&gt;
     <header class="header w">
-        <!-- logo 模块 -->
+        &lt;!&ndash; logo 模块 &ndash;&gt;
         <div class="logo">
-            <h1><a href="https://39b456804w.oicp.vip/" title="DShop校园零售">DShop校园零售</a></h1>
+            <h1><a href="http://localhost:8080/" title="DShop校园零售">DShop校园零售</a></h1>
         </div>
 
-        <!-- 搜索框 -->
+        &lt;!&ndash; 搜索框 &ndash;&gt;
         <div class="search">
             <input type="text">
             <button type="button">搜 索</button>
         </div>
     </header>
 
-    
+    -->
 
     <!-- nav 模块 -->
     <!-- <nav class="nav">
@@ -84,7 +90,7 @@
     <!-- 推荐模块 -->
     <div class="recommand w">
         <div class="head">
-            <img src="../static/images/recom.png" alt="">
+            <img th:src="@{/static/images/recom.png}" alt="今日推荐">
         </div>
         <div class="content">
             <ul>
@@ -109,12 +115,14 @@
                 <span th:id="${products.value.categoryAnchor}" th:text="${products.key}" ></span>
                 <hr>
                 <ul class="goods">
-                    <li  th:each="product : ${products.value.product}" >
-                        <img th:src="${product.image}" alt="">
-                        <div class="introduction">
-                            <h3 th:text="${product.name}"></h3>
-                            <p th:text="${product.price}"></p>
-                        </div>
+                    <li th:each="product : ${products.value.product}" >
+                        <a th:href="@{/shop/goods/info/}+${product.id}">
+                            <img th:src="${product.image}" alt="">
+                            <div class="introduction">
+                                <h3 th:text="${product.name}"></h3>
+                                <p th:text="${product.price}"></p>
+                            </div>
+                        </a>
                     </li>
                 </ul>
             </li>
@@ -154,9 +162,11 @@
 
 </body>
 
-<script th:src="@{/static/js/jquery-3.6.4.js}"></script>
-<script th:src="@{/static/js/animate.js}"></script>
-<script th:src="@{/static/js/heartCheck.js}"></script>
+<script th:src="@{/static/js/common/jquery-3.6.4.js}"></script>
+<script th:src="@{/static/js/common/animate.js}"></script>
+<script th:src="@{/static/js/common/common.js}"></script>
+<script th:src="@{/static/js/common/tip.js}"></script>
+<script th:src="@{/static/js/common/heartCheck.js}"></script>
 <script th:src="@{/static/js/index.js}"></script>
 
 </html>

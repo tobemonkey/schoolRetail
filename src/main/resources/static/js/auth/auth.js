@@ -32,7 +32,7 @@ sendBtn.addEventListener("click", function () {
         }
     }, 1000);
     $.ajax({
-        url: 'https://39b456804w.oicp.vip/login/oauth2/github/verify/' + emailValue,
+        url: 'http://localhost:8080/login/oauth2/github/verify/' + emailValue,
         type: 'get',
         success: data => {
             cocoMessage.info(data['data']);
@@ -45,7 +45,6 @@ let submitBtn = document.getElementById("submit");
 // 1. 参数校验
 let email = document.getElementById("email");
 let verifyCode = document.getElementById("verify");
-let password = document.getElementById("password");
 function checkEmail() {
     let pattern = new RegExp("^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$");
     return pattern.test(email.value);
@@ -64,18 +63,6 @@ email.addEventListener("focus", () => {
     email.style.color = "black";
 })
 
-password.addEventListener("blur", () => {
-    if (!checkPassword(password.value)) {
-        password.style.borderColor = "red";
-        password.style.color = "red";
-        cocoMessage.error("邮箱格式错误！请检查");
-    }
-});
-
-password.addEventListener("focus", () => {
-    password.style.borderColor = "#ccc";
-    password.style.color = "black";
-})
 // 2. 提交
 submitBtn.addEventListener('click', () => {
     if (!checkEmail()) {
@@ -90,33 +77,33 @@ submitBtn.addEventListener('click', () => {
         cocoMessage.error("验证码应该为6位！请检查");
         return;
     }
-    if (!checkPassword(password.value)) {
-        password.style.borderColor = "red";
-        password.style.color = "red";
-        cocoMessage.error("密码应该为10-16位的数字或字母！请检查");
-        return;
-    }
 
     submitBtn.disable = true;
     var href = window.location.href;
-    let jsonData = {'email': email.value, 'verifyCode': verifyCode.value, 'password': password.value};
+    let jsonData = {'email': email.value, 'verifyCode': verifyCode.value};
 
     $.ajax({
         dataType: 'json',
         contentType: 'application/json;charset=utf-8',
-        url: 'https://39b456804w.oicp.vip/login/oauth2/github/commit/' +  href.slice(href.lastIndexOf('/')+1),
+        url: 'http://localhost:8080/login/oauth2/github/commit/' +  href.slice(href.lastIndexOf('/')+1),
         type: 'post',            
         data: JSON.stringify(jsonData),
         success: function(data) {
             submitBtn.disable = false;
-            console.log(data);
+            if (data['status'] !== '0001') {
+                cocoMessage.error(data['data']['msg'])
+                if (data['data']['status'] === '3002') {
+                    cocoMessage.error("身份超时，即将跳转重新绑定");
+                    setInterval(() => {
+                        window.location.href = "http://localhost:8080/loginAndRegister";
+                    }, 3000)
+                }
+            } else {
+                cocoMessage.info(data['data']['msg'])
+                setInterval(() => {
+                    window.location.href = "http://localhost:8080/";
+                }, 3000)
+            }
         }
     });
 })
-
-function checkPassword(pwdValue) {
-    if (pwdValue.length === 0)
-        return true;
-    let pattern = new RegExp("^[a-zA-Z0-9]{10,16}$");
-    return pattern.test(pwdValue);
-}

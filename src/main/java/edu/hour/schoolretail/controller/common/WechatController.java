@@ -80,7 +80,7 @@ public class WechatController {
 				"#wechat_redirect";
 
 		//对redirect_rul进行URLEncode编码
-		String redirectUrl = "https://39b456804w.oicp.vip/loginAndRegister";
+		String redirectUrl = "http://localhost:8080/loginAndRegister";
 		try {
 			redirectUrl = URLEncoder.encode(redirectUrl, "utf-8");
 		} catch (Exception e) {

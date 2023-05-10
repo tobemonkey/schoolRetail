@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -38,10 +39,10 @@ public class EmailUtil {
     @Value("${mail.verify.length}")
     private int length;
 
-    @Autowired
+    @Resource
     private JavaMailSenderImpl javaMailSender;
 
-    @Autowired
+    @Resource
     private TemplateEngine templateEngine;
 
     /**

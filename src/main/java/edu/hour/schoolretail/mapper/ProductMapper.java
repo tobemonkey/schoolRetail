@@ -2,10 +2,13 @@ package edu.hour.schoolretail.mapper;
 
 import edu.hour.schoolretail.entity.Product;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import edu.hour.schoolretail.vo.order.OrderVO;
 import edu.hour.schoolretail.vo.shop.ProductDetailVO;
 import edu.hour.schoolretail.vo.shop.ProductVO;
 import org.apache.ibatis.annotations.MapKey;
+import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +32,57 @@ public interface ProductMapper extends BaseMapper<Product> {
 	 * @param id
 	 * @return
 	 */
-	ProductDetailVO selectGoodsInfo(Integer id);
+	ProductDetailVO selectGoodsInfo(@Param("id") Integer id);
+
+	/**
+	 * 查询商品单价
+	 * @param goodsId
+	 * @return
+	 */
+	BigDecimal selectGoodsPrice(@Param("goodsId") Integer goodsId);
+
+	/**
+	 * 查询订单商品的一些信息，包括：商品库存，商品单价
+	 * @param goodsId
+	 */
+	Product selectGoodsOrderInfo(@Param("id") Integer goodsId);
+
+	/**
+	 * 查询商品剩余库存
+	 * @param goodsId
+	 * @return
+	 */
+	int selectGoodsStock(Integer goodsId);
+
+	/**
+	 * 删减商品库存
+	 *
+	 * @param goodsId
+	 * @param goodsCount
+	 * @return
+	 */
+	boolean reduceGoodsStock(@Param("goodsId") Integer goodsId, @Param("count") Integer goodsCount);
+
+	/**
+	 * 回退库存
+	 * @param goodsId
+	 * @param goodsNum
+	 */
+	void backStock(@Param("goodsId") Integer goodsId, @Param("goodsNum") Integer goodsNum);
+
+	/**
+	 * 查询商品名称
+	 * @param goodsId
+	 * @return
+	 */
+	String selectGoodsName(@Param("goodsId") Integer goodsId);
+
+	/**
+	 * 补全 orderVO 中的商家信息
+	 * @param goodsId
+	 * @return
+	 */
+	OrderVO makeUpShopInfo(@Param("goodsId") Integer goodsId);
 }
 
 

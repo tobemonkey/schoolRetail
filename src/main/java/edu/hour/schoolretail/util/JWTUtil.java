@@ -76,7 +76,7 @@ public class JWTUtil {
      * @return
      * @throws Exception
      */
-    public static DecodedJWT decodeToken(String token) throws IllegalArgumentException, Exception {
+    public static DecodedJWT decodeToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256(SECRET);
         try {
             return JWT.require(algorithm)
@@ -84,7 +84,7 @@ public class JWTUtil {
                     .verify(token);
         } catch (TokenExpiredException e) {
             log.info("token 超时！token 为：{}，错误信息为：{}", token, e.getMessage());
-            throw new IllegalArgumentException("token解析异常：token 超时", e);
+            throw new TokenExpiredException("token解析异常：token 超时");
         } catch (SignatureVerificationException e) {
             log.info("签名异常！token 为：{}，错误信息为：{}", token, e.getMessage());
             throw new IllegalArgumentException("token解析异常：token 签名出错", e);
@@ -105,10 +105,17 @@ public class JWTUtil {
      * @return
      * @throws Exception
      */
-    public static Map<String, String> getClaimsMap(String token)throws IllegalArgumentException, Exception  {
+    public static Map<String, String> getClaimsMap(String token) {
         Map<String, String> map = new HashMap<>();
-        DecodedJWT decode = decodeToken(token);
+        DecodedJWT decode = null;
+        try {
+            decode = decodeToken(token);
+        } catch (Exception e) {
+            log.error("token 解析异常：{}", e.getMessage());
+            throw e;
+        }
         map.put("id", String.valueOf(decode.getClaim("id").asLong()));
+        map.put("role", String.valueOf(decode.getClaim("role").asInt()));
         map.put("exp", String.valueOf(decode.getClaim("exp").asDate()));
         return map;
     }

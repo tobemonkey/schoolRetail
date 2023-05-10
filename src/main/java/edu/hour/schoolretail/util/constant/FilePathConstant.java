@@ -8,11 +8,11 @@ package edu.hour.schoolretail.util.constant;
  */
 public class FilePathConstant {
 
-	public static final String USER_IMAGE = "/user/";
+	public static final String USER_IMAGE = "user/";
 
-	public static final String GOODS_IMAGE = "/goods/";
+	public static final String GOODS_IMAGE = "goods/";
 
-	public static final String BROADCAST_IMAGE = "/broadcast/";
+	public static final String BROADCAST_IMAGE = "broadcast/";
 
-	public static final String CATEGORY_IMAGE = "/category/";
+	public static final String CATEGORY_IMAGE = "category/";
 }

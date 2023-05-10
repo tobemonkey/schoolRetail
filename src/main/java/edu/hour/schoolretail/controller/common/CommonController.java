@@ -1,20 +1,21 @@
 package edu.hour.schoolretail.controller.common;
 
-import com.alibaba.fastjson.JSON;
 import edu.hour.schoolretail.common.constant.enums.exception.ExceptionEnum;
 import edu.hour.schoolretail.service.BannerService;
 import edu.hour.schoolretail.service.ProductService;
 import edu.hour.schoolretail.service.UserService;
+import edu.hour.schoolretail.util.CookieUtil;
 import edu.hour.schoolretail.vo.shop.BannerVO;
 import edu.hour.schoolretail.vo.shop.ProductVO;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Controller;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,8 @@ import java.util.Map;
  * @Description
  * @createTime 2023年03月10日 10:49
  */
-@Controller
+@RestController
+@Slf4j
 public class CommonController {
 
 	@Resource
@@ -37,24 +39,14 @@ public class CommonController {
 	private UserService userService;
 
 	@GetMapping
-	public String getIndex() {
-return null;
-	}
+	public ModelAndView getIndex(HttpServletRequest request, Model model) {
 
-	@GetMapping("/?")
-	public String getIndex(HttpServletRequest request, Model model) {
+		Map<String, String> map = (Map<String, String>) request.getAttribute("data");
 		// 用户信息
-		String token = request.getHeader("token");
-		// token 不为空则说明 token 已经检验过了
-		if (StringUtils.isNotBlank(token)) {
-			String data = (String) request.getSession().getAttribute("data");
-			HashMap<String, String> hashMap = JSON.parseObject(data, HashMap.class);
-			Long id = Long.valueOf(hashMap.get("id"));
-			Map<String, Object> simpleShowInfo = userService.selectSimpleShowInfo(id);
-			// 如果查询成功则将数据封装给 model
-			if (simpleShowInfo.get("status").equals(ExceptionEnum.COMMON_SUCCESS.getStatus())) {
-				model.addAttribute("userInfo", simpleShowInfo.get("msg"));
-			}
+		if (map != null) {
+			// 能够成功获取 id 则说明已经通过验证
+			Long id = Long.valueOf(map.get("id"));
+			addSimpleUserInfoToModel(id, model);
 		}
 		// 首页轮播图
 		List<BannerVO> broadcasts = bannerService.selectAllBroadcast();
@@ -65,10 +57,34 @@ return null;
 		// 首页商品展示
 		Map<String, List<ProductVO>> productMap = productService.selectAllCategoryGoods();
 		model.addAttribute("productMap", productMap);
-		return "index";
+		return new ModelAndView("index");
 	}
 
 
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, String> data = (Map<String, String>) request.getAttribute("data");
+		Long id = Long.valueOf(data.get("id"));
+		log.info("用户 id 为：{} 退出！", id);
+		userService.logout(id);
+		// 删除对应的 cookie
+		response.addCookie(CookieUtil.deleteCookie("token"));
+		return null;
+	}
 
+	/**
+	 * 将简单用户信息添加到 model
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	public Map<String, Object> addSimpleUserInfoToModel(Long id, Model model) {
+		Map<String, Object> simpleShowInfo = userService.selectSimpleShowInfo(id);
+		// 如果查询成功则将数据封装给 model
+		if (simpleShowInfo.get("status").equals(ExceptionEnum.COMMON_SUCCESS.getStatus())) {
+			model.addAttribute("userSimpleInfo", simpleShowInfo.get("msg"));
+		}
+		return simpleShowInfo;
+	}
 
 }

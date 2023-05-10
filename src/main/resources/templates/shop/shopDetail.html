@@ -16,31 +16,9 @@
 </head>
 <body>
     <!-- 快捷导航模块 -->
-    <section class="shortcut">
-        <div class="w">
-            <div class="fl">
-                <ul>
-                    <li>DShop 欢迎您！&nbsp;</li>
-                    <li>
-                        <a class="style-red" href="https://39b456804w.oicp.vip/loginAndRegister">登入 & 注册</a>
-                    </li>
-                </ul>
-                
-            </div>
-            <div class="fr">
-                
-                <ul>
-                    <li class="shopcar">购物车<span class="count">99+</span></li>
-                    <li></li>
-                    <li>我的订单</li>
-                    <li></li>
-                    <li>我的信息</li>
-                </ul>
-            </div>
-        </div>
-    </section>
+    <div th:insert="~{index::shortcut}"></div>
 
-    <div class="body">
+    <div class="body" th:if="${goodsInfo != null}">
         <div class="left">
             <img th:src="${goodsInfo.image}" alt="">
         </div>
@@ -59,13 +37,18 @@
             <div class="count">
                 <span class="th">数量</span>
                 <button class="decrease" type="button">-</button>
-                <input type="text" class="num" value="1">
+                <input type="number" step="1" class="num" value="1">
                 <button class="increase" type="button">+</button>
             </div>
 
             <div class="desc">
                 <span class="th">详细描述</span>
                 <textarea name="desc" id="dsc" cols="30" rows="10" th:text="${goodsInfo.desc}" readonly></textarea>
+            </div>
+
+            <div class="total">
+                <span class="th">总价</span>
+                <span class="td"></span>
             </div>
 
             <div class="operation">
@@ -105,5 +88,12 @@
         </div>
     </footer>
 </body>
-<script th:src="@{/static/js/shop/productDetail.js}"></script>
+<script th:src="@{/static/js/common/jquery-3.6.4.js}"></script>
+<script th:src="@{/static/js/common/common.js}"></script>
+<script th:src="@{/static/js/common/tip.js}"></script>
+<script th:src="@{/static/js/shop/shopDetail.js}"></script>
+
+<script th:inline="javascript">
+    let merchantId = [[${goodsInfo.shopId}]]
+</script>
 </html>

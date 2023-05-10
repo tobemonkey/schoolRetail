@@ -33,11 +33,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.amqp</groupId>
-            <artifactId>spring-rabbit-test</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>mysql</groupId>
@@ -45,15 +40,11 @@
             <version>5.1.49</version>
         </dependency>
 
+        <!-- 设置数据库时间格式 -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.51</version>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.13.3</version>
         </dependency>
 
         <!-- swagger -->
@@ -74,13 +65,13 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.2</version>
         </dependency>
-
-        <!-- 设置数据库时间格式 -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.13.3</version>
+            <groupId>com.github.jeffreyning</groupId>
+            <artifactId>mybatisplus-plus</artifactId>
+            <version>1.5.1-RELEASE</version>
         </dependency>
+
+
 
         <!-- 加密配置文件密码 -->
         <dependency>
@@ -169,6 +160,17 @@
             <version>4.5.13</version>
         </dependency>
 
+        <!-- rocketmq -->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+            <version>5.0.0</version>
+        </dependency>
 
     </dependencies>
 

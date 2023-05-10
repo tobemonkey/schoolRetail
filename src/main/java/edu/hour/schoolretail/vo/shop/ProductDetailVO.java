@@ -1,7 +1,5 @@
 package edu.hour.schoolretail.vo.shop;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-
 import java.math.BigDecimal;
 
 /**
@@ -11,6 +9,13 @@ import java.math.BigDecimal;
  * @createTime 2023年03月25日 23:05
  */
 public class ProductDetailVO {
+
+	/**
+	 * 卖家 id
+	 */
+	private Long merchantId;
+
+	private String shopId;
 	/**
 	 * 商品名称
 	 */
@@ -41,19 +46,25 @@ public class ProductDetailVO {
 	 */
 	private Integer status;
 
+	/**
+	 * 商家地址
+	 */
 	private String merchantAddress;
 
-	public ProductDetailVO() {
+	public Long getMerchantId() {
+		return merchantId;
 	}
 
-	public ProductDetailVO(String name, String desc, String image, Integer stock, BigDecimal price, Integer status, String merchantAddress) {
-		this.name = name;
-		this.desc = desc;
-		this.image = image;
-		this.stock = stock;
-		this.price = price;
-		this.status = status;
-		this.merchantAddress = merchantAddress;
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
+	}
+
+	public String getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(String shopId) {
+		this.shopId = shopId;
 	}
 
 	public String getName() {
